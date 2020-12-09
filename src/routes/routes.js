@@ -37,7 +37,7 @@ module.exports = (app) => {
 
         // Ativar ou desativar actions
         arr.each(res.actions, (key, action) => {
-            action.active = arr.get(actions, action, true);
+            action.active = arr.get(actions, key, true);
         });
     
         // Registrar rotas
