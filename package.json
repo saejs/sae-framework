@@ -1,6 +1,6 @@
 {
     "name": "sae-framework",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "Framework to Server Api Engine JS to make micro services",
     "main": "src/index.js",
     "scripts": {
@@ -28,6 +28,7 @@
         "cors": "2.8.5",
         "express": "4.17.1",
         "sequelize": "^6.3.5",
-        "mysql2": "^2.2.5"
+        "mysql2": "^2.2.5",
+        "dotenv": "^8.2.0"
     }
 }

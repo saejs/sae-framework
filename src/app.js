@@ -18,6 +18,9 @@ class App {
     constructor() {
         this.booted = false;
 
+        // Carregar env
+        require('dotenv').config()
+
         this.$route = express();
         //this.router = express.Router();
 
