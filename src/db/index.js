@@ -1,6 +1,6 @@
 const db = require('./db');
 
 // Carregar models
-db.models = require('./models');
+db.loadModels = require('./models');
 
 module.exports = db;
