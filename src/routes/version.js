@@ -3,7 +3,7 @@ const fs = require('fs');
 module.exports = (app) => {
     return (packageFile, partUri = '/version') => {
         // Registrar rota da versao
-        app.$route.get(partUri, async (req, res) => {
+        app.get(partUri, async (req, res) => {
 
             // Carregar version
             if (!fs.existsSync(packageFile)) {

@@ -35,7 +35,7 @@ class Resource {
      * Registrar rota LIST
      */
     __actionList(app, resource) {
-        app.$route.get(resource.uri, (req, res) => {
+        app.get(resource.uri, async (req, res) => {
             res.json({
                 type: 'resource',
                 action: 'LIST',
@@ -49,7 +49,7 @@ class Resource {
      * Registrar rota CREATE
      */
     __actionCreate(app, resource) {
-        app.$route.get(resource.uri + '/create', (req, res) => {
+        app.get(resource.uri + '/create', async (req, res) => {
             res.json({
                 type: 'resource',
                 action: 'CREATE',
@@ -63,7 +63,7 @@ class Resource {
      * Registrar rota EDIT
      */
     __actionEdit(app, resource) {
-        app.$route.get(resource.uri + '/:id/edit', (req, res) => {
+        app.get(resource.uri + '/:id/edit', async (req, res) => {
             res.json({
                 type: 'resource',
                 action: 'EDIT',
@@ -77,7 +77,7 @@ class Resource {
      * Registrar rota SHOW
      */
     __actionShow(app, resource) {
-        app.$route.get(resource.uri + '/:id(((?!create)[0-9a-zA-Z]+)+)', (req, res) => {
+        app.get(resource.uri + '/:id(((?!create)[0-9a-zA-Z]+)+)', async (req, res) => {
             var model = await resource.__getModelById(req.params.id);
             res.json(model);
         });
@@ -87,7 +87,7 @@ class Resource {
      * Registrar rota STORE
      */
     __actionStore(app, resource) {
-        app.$route.post(resource.uri, (req, res) => {
+        app.post(resource.uri, async (req, res) => {
             res.json({
                 type: 'resource',
                 action: 'STORE',
@@ -101,7 +101,7 @@ class Resource {
      * Registrar rota UPDATE
      */
     __actionUpdate(app, resource) {
-        app.$route.put(resource.uri + '/:id', (req, res) => {
+        app.put(resource.uri + '/:id', async (req, res) => {
             res.json({
                 type: 'resource',
                 action: 'UPDATE',
@@ -115,7 +115,7 @@ class Resource {
      * Registrar rota DELETE
      */
     __actionDelete(app, resource) {
-        app.$route.delete(resource.uri + '/:id?', (req, res) => {
+        app.delete(resource.uri + '/:id?', async (req, res) => {
             res.json({
                 type: 'resource',
                 action: 'DELETE',
