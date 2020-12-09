@@ -37,14 +37,5 @@ module.exports = (seq, model, tableName, attributes, options = {}) => {
     };
     Object.assign(opts, options);
 
-    var model = seq.define(model, attrs, opts);
-
-    // setAttrs()
-    model.setAttrs = (attrs) => {
-        arr.each(attrs, (key, value) => {
-            model[key] = value;
-        });
-    }
-
-    return model;
+    return seq.define(model, attrs, opts);
 };

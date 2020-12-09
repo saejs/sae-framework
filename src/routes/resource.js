@@ -95,7 +95,9 @@ class Resource {
             try {
                 var json = req.body;
 
-                model.setAttrs(json);
+                arr.each(json, (key, value) => {
+                    model[key] = value;
+                });
 
                 await model.save();
 
@@ -114,12 +116,27 @@ class Resource {
      */
     __actionUpdate(app, resource) {
         app.put(resource.uri + '/:id', async (req, res) => {
-            res.json({
-                type: 'resource',
-                action: 'UPDATE',
-                method: 'PUT',
-                status: 'OK',
-            });
+            var model = new resource.model();
+
+            var t = await model.sequelize.transaction();
+            try {
+                var json = req.body;
+
+                var obj = await resource.__getModelById(req.params.id);
+
+                arr.each(json, (key, value) => {
+                    obj[key] = value;
+                });
+
+                await obj.save();
+
+                await t.commit();
+
+                res.json(obj);
+            } catch (err) {
+                await t.rollback();
+                throw err;
+            }
         });
     }
 
@@ -128,12 +145,38 @@ class Resource {
      */
     __actionDelete(app, resource) {
         app.delete(resource.uri + '/:id?', async (req, res) => {
-            res.json({
-                type: 'resource',
-                action: 'DELETE',
-                method: 'DELETE',
-                status: 'OK',
-            });
+            var model = new resource.model();
+
+            var t = await model.sequelize.transaction();
+            try {
+                // Carregar lista de ids
+                var ids = req.params.id;
+                if (ids == null) {
+                    ids = req.query.ids;
+                }
+                ids = (typeof ids == 'string') ? ids.split(',') : [];
+
+                var count = 0;
+
+                for (var i in ids) {
+                    var obj = await resource.__getModelById(ids[i], false);
+                    if (obj !== null) {
+                        await obj.destroy();
+                        count += 1;
+                    }
+                }
+
+                await t.commit();
+
+                res.json({
+                    success: true,
+                    deleted: count
+                });
+                
+            } catch (err) {
+                await t.rollback();
+                throw err;
+            }
         });
     }
 
