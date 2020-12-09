@@ -1,6 +1,6 @@
 'use strict';
 
-const { db } = require('./db');
+const db = require('./db');
 
 const fs = require('fs');
 const path = require('path');
@@ -12,8 +12,8 @@ const models = {};
 //----------------------------------------------------------------------------------------
 // Add defineModel method into sequelize db to pre definition model.
 //----------------------------------------------------------------------------------------
-db.defineModel = (model, tableName, attributes, options = {}) => {
-    return defineModel(db, model, tableName, attributes, options);
+db.sequelize.defineModel = (model, tableName, attributes, options = {}) => {
+    return defineModel(db.sequelize, model, tableName, attributes, options);
 };
 
 //----------------------------------------------------------------------------------------
@@ -25,7 +25,7 @@ fs.readdirSync(pathModels)
     })
 
     .forEach(file => {
-        const model = require(path.join(pathModels, file))(db, db.DataTypes);
+        const model = require(path.join(pathModels, file))(db.sequelize, db.DataTypes);
         models[model.name] = model;
     });
 

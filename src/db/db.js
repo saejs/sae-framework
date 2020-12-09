@@ -18,11 +18,6 @@ if (config.use_env_variable) {
     sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
-// Add defineModel para registrar novo modelo pre-configurado.
-//sequelize.defineModel = (model, tableName, attributes, options = {}) => {
-//    return defineModel(sequelize, model, tableName, attributes, options);
-//};
-
 module.exports = {
     db        : sequelize,
     DataTypes : Sequelize.DataTypes,
