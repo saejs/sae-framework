@@ -78,12 +78,8 @@ class Resource {
      */
     __actionShow(app, resource) {
         app.$route.get(resource.uri + '/:id(((?!create)[0-9a-zA-Z]+)+)', (req, res) => {
-            res.json({
-                type: 'resource',
-                action: 'SHOW',
-                method: 'GET',
-                status: 'OK',
-            });
+            var model = await resource.__getModelById(req.params.id);
+            res.json(model);
         });
     }
 
@@ -129,6 +125,26 @@ class Resource {
         });
     }
 
+    /**
+     * Load model by Id.
+     * 
+     * @param {String} id Od of model
+     * @param {Boolean} createException Has create exception
+     * @returns {Object}
+     */
+    async __getModelById(id, createException = true) {
+        var model = await this.model.findByPk(id);
+
+        if (model == null) {
+            if (createException) {
+                throw new Error(`${this.label} [${id}] nao foi encontrado`);
+            }
+
+            return null;
+        }
+
+        return model;
+    }
 }
 
 module.exports = Resource;
