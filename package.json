@@ -1,0 +1,33 @@
+{
+    "name": "sae-framework",
+    "version": "1.0.0",
+    "description": "Framework to Server Api Engine JS to make micro services",
+    "main": "index.js",
+    "scripts": {
+        "server": "nodemon server.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/saejs/sae-framework.git"
+    },
+    "keywords": [
+        "sae",
+        "framework",
+        "sae-framework",
+        "api",
+        "js"
+    ],
+    "author": "Bruno Gonçalves",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/saejs/sae-framework/issues"
+    },
+    "homepage": "https://github.com/saejs/sae-framework#readme",
+    "dependencies": {
+        "@rhinojs/support": "^0.1.27",
+        "cors": "2.8.5",
+        "express": "4.17.1",
+        "sequelize": "^6.3.5",
+        "mysql2": "^2.2.5"
+    }
+}
