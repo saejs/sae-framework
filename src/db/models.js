@@ -9,6 +9,12 @@ const config = getSequelizeConfig(false);
 const pathModels = config['models-path'];
 const models = {};
 
+//----------------------------------------------------------------------------------------
+// Add defineModel method into sequelize db to pre definition model.
+//----------------------------------------------------------------------------------------
+db.sequelize.defineModel = (model, tableName, attributes, options = {}) => {
+    return defineModel(db.sequelize, model, tableName, attributes, options);
+};
 
 //----------------------------------------------------------------------------------------
 // Carregar arquivos do models.
@@ -19,7 +25,7 @@ fs.readdirSync(pathModels)
     })
 
     .forEach(file => {
-        const model = require(path.join(pathModels, file))(db.associate, db.DataTypes);
+        const model = require(path.join(pathModels, file))(db.sequelize, db.DataTypes);
         models[model.name] = model;
     });
 
