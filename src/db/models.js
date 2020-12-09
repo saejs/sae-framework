@@ -1,15 +1,18 @@
 'use strict';
 
-module.exports = () => {
+module.exports = (pathModels = null) => {
 
     const db = require('./db');
 
     const fs = require('fs');
     const path = require('path');
-    const { getSequelizeConfig } = require('./helpers');
-    const config = getSequelizeConfig(false);
-    const pathModels = config['models-path'];
     const defineModel = require('./model');
+    
+    if (!pathModels) {
+        const { getSequelizeConfig } = require('./helpers');
+        const config = getSequelizeConfig(false);
+        pathModels = config['models-path'];
+    }
     
     //----------------------------------------------------------------------------------------
     // Add defineModel method into sequelize db to pre definition model.
