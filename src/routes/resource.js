@@ -22,9 +22,11 @@ class Resource {
      * Registrar rotas.
      */
     register(app) {
+        var $this = this;
+
         arr.each(this.actions, (key, action) => {
             if (action.active) {
-                action.register(app);
+                action.register(app, $this);
             }
         });
     }
@@ -32,8 +34,8 @@ class Resource {
     /**
      * Registrar rota LIST
      */
-    __actionList(app) {
-        app.$route.get(this.uri, (req, res) => {
+    __actionList(app, resource) {
+        app.$route.get(resource.uri, (req, res) => {
             res.json({
                 type: 'resource',
                 action: 'LIST',
@@ -46,8 +48,8 @@ class Resource {
     /**
      * Registrar rota CREATE
      */
-    __actionCreate(app) {
-        app.$route.get(this.uri + '/create', (req, res) => {
+    __actionCreate(app, resource) {
+        app.$route.get(resource.uri + '/create', (req, res) => {
             res.json({
                 type: 'resource',
                 action: 'CREATE',
@@ -60,8 +62,8 @@ class Resource {
     /**
      * Registrar rota EDIT
      */
-    __actionEdit(app) {
-        app.$route.get(this.uri + '/:id/edit', (req, res) => {
+    __actionEdit(app, resource) {
+        app.$route.get(resource.uri + '/:id/edit', (req, res) => {
             res.json({
                 type: 'resource',
                 action: 'EDIT',
@@ -74,8 +76,8 @@ class Resource {
     /**
      * Registrar rota SHOW
      */
-    __actionShow(app) {
-        app.$route.get(this.uri + '/:id(((?!create)[0-9a-zA-Z]+)+)', (req, res) => {
+    __actionShow(app, resource) {
+        app.$route.get(resource.uri + '/:id(((?!create)[0-9a-zA-Z]+)+)', (req, res) => {
             res.json({
                 type: 'resource',
                 action: 'SHOW',
@@ -88,8 +90,8 @@ class Resource {
     /**
      * Registrar rota STORE
      */
-    __actionStore(app) {
-        app.$route.post(this.uri, (req, res) => {
+    __actionStore(app, resource) {
+        app.$route.post(resource.uri, (req, res) => {
             res.json({
                 type: 'resource',
                 action: 'STORE',
@@ -102,8 +104,8 @@ class Resource {
     /**
      * Registrar rota UPDATE
      */
-    __actionUpdate(app) {
-        app.$route.put(this.uri + '/:id', (req, res) => {
+    __actionUpdate(app, resource) {
+        app.$route.put(resource.uri + '/:id', (req, res) => {
             res.json({
                 type: 'resource',
                 action: 'UPDATE',
@@ -116,8 +118,8 @@ class Resource {
     /**
      * Registrar rota DELETE
      */
-    __actionDelete(app) {
-        app.$route.delete(this.uri + '/:id?', (req, res) => {
+    __actionDelete(app, resource) {
+        app.$route.delete(resource.uri + '/:id?', (req, res) => {
             res.json({
                 type: 'resource',
                 action: 'DELETE',
