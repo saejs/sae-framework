@@ -50,12 +50,12 @@ class Resource {
      */
     __actionCreate(app, resource) {
         app.get(resource.uri + '/create', async (req, res) => {
-            res.json({
-                type: 'resource',
-                action: 'CREATE',
-                method: 'GET',
-                status: 'OK',
-            });
+            var obj = new resource.model();
+
+            // Carregar valores default
+            //...
+
+            res.json(obj);
         });
     }
 
@@ -64,12 +64,12 @@ class Resource {
      */
     __actionEdit(app, resource) {
         app.get(resource.uri + '/:id/edit', async (req, res) => {
-            res.json({
-                type: 'resource',
-                action: 'EDIT',
-                method: 'GET',
-                status: 'OK',
-            });
+            var obj = await resource.__getModelById(req.params.id);
+
+            // Aplicar valores default quando entra em modo edição
+            //..
+
+            res.json(obj);
         });
     }
 
@@ -78,8 +78,9 @@ class Resource {
      */
     __actionShow(app, resource) {
         app.get(resource.uri + '/:id(((?!create)[0-9a-zA-Z]+)+)', async (req, res) => {
-            var model = await resource.__getModelById(req.params.id);
-            res.json(model);
+            var obj = await resource.__getModelById(req.params.id);
+
+            res.json(obj);
         });
     }
 
@@ -88,12 +89,23 @@ class Resource {
      */
     __actionStore(app, resource) {
         app.post(resource.uri, async (req, res) => {
-            res.json({
-                type: 'resource',
-                action: 'STORE',
-                method: 'POST',
-                status: 'OK',
-            });
+            var model = new resource.model();
+
+            var t = await model.sequelize.transaction();
+            try {
+                var json = req.body;
+
+                model.setAttrs(json);
+
+                await model.save();
+
+                await t.commit();
+
+                res.json(model);
+            } catch (err) {
+                await t.rollback();
+                throw err;
+            }
         });
     }
 

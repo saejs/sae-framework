@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 const { v4: uuidv4 } = require('uuid');
 const str = require('@rhinojs/support/src/str');
+const arr = require('@rhinojs/support/src/arr');
 
 /**
  * Register new model.
@@ -36,5 +37,14 @@ module.exports = (seq, model, tableName, attributes, options = {}) => {
     };
     Object.assign(opts, options);
 
-    return seq.define(model, attrs, opts);
+    var model = seq.define(model, attrs, opts);
+
+    // setAttrs()
+    model.setAttrs = (attrs) => {
+        arr.each(attrs, (key, value) => {
+            model[key] = value;
+        });
+    }
+
+    return model;
 };
