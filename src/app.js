@@ -31,6 +31,8 @@ class App {
         this.$route.set('json spaces', 4);
 
         this.events = new EventEmitter();
+
+        this.boot();
     }
 
     /**
@@ -49,9 +51,6 @@ class App {
         this.$route.use(middlewareError());
         this.$route.use(middlewareJson());
         this.$route.use(middlewareGetClientIp());
-
-        // Registrar rotas padrao
-        routeError404(this);        
 
         // Event para registrar middlewares
         this.events.emit('booted', this, this.$route);
@@ -75,7 +74,8 @@ class App {
      * @param {Integer} port Numero da portar que ira atender as requisicoes
      */
     listen(port) {
-        this.boot();
+        // Registrar rotas padrao
+        routeError404(this);        
 
         // Iniciar servico
         var srv = this.$route.listen(port, () => {
