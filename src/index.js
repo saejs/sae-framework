@@ -1,6 +1,10 @@
-const db = require('./db');
+const App = require('./app');
 
-module.exports = {
-    App    : require('./app'),
-    db,
-};
+const app = new App();
+
+// Load database
+app.on('booted', (app) => {
+    app.db = require('./db');
+});
+
+module.exports = app;
