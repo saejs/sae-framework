@@ -58,7 +58,7 @@ class Resource {
      * @returns {Object}
      */
     async __transaction() {
-        var model = new resource.model();
+        var model = new this.model();
 
         return await model.sequelize.transaction();
     }
