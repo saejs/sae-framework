@@ -1,7 +1,52 @@
+const Arr = require('@rhinojs/support/src/arr');
+const { Op } = require('sequelize');
+
 /**
  * Aplicar filtros.
  */
-function listApply_filter(query, req) {
+function listApply_filter(query, req, resource) {
+    query.where = {};
+
+    // Search
+    listApply_filter_search(query, req, resource);
+
+    // Atributes
+    listApply_filter_attributes(query, req, resource);
+}
+
+/**
+ * Aplicar filtros da busca.
+ */
+function listApply_filter_search(query, req, resource) {
+    if (!req.query.q) {
+        return;
+    }
+
+    var q = req.query.q;
+    var attrs = resource.searchAttrs;
+    if (attrs.length == 0) {
+        return;
+    }
+
+    var wheres = [];
+
+    Arr.each(attrs, (k, attr) => {
+        var where = {};
+        where[attr] = {
+            [Op.like] : '%' + q + '%'
+        }
+        wheres.push(where);
+    });
+
+    if (wheres.length > 0) {
+        query.where[Op.and] = wheres;
+    }
+}
+
+/**
+ * Aplicar filtros dos atributos.
+ */
+function listApply_filter_attributes(query, req, resource) {
     //..
 }
 
@@ -9,7 +54,7 @@ function listApply_filter(query, req) {
  * Aplicar ordenacao.
  * ?sort=campo.asc,campo1.desc,campo2 - quando nao informado .asc|desc assumir asc
  */
-function listApply_orders(query, req) {
+function listApply_orders(query, req, resource) {
     if (!req.query.sort) {
         return;
     }
@@ -35,7 +80,7 @@ function listApply_orders(query, req) {
  * ?limit=10
  * ?offset=3
  */
-function listApply_pages(query, req) {
+function listApply_pages(query, req, resource) {
     // Limit
     if (req.query.limit) {
         query.limit = req.query.limit;
@@ -54,13 +99,13 @@ module.exports = (app, resource) => {
         var query = {};
 
         // Aplicar filtros
-        listApply_filter(query, req);
+        listApply_filter(query, req, resource);
 
         // Aplicar ordenação
-        listApply_orders(query, req);
+        listApply_orders(query, req, resource);
 
         // Aplicar paginação
-        listApply_pages(query, req);
+        listApply_pages(query, req, resource);
 
         // Carregar registros
         var all = await resource.model.findAll(query);

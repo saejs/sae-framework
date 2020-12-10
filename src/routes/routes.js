@@ -1,6 +1,5 @@
 const version = require('./version');
 const Resource = require('./resource');
-const arr = require("@rhinojs/support/src/arr");
 
 module.exports = (app) => {
     /**
@@ -56,13 +55,8 @@ module.exports = (app) => {
     }
 
     // Register resources
-    app.resource = (part, model, label, actions = {}) => {
-        const res = new Resource(part, model, label);
-
-        // Ativar ou desativar actions
-        arr.each(res.actions, (key, action) => {
-            action.active = arr.get(actions, key, true);
-        });
+    app.resource = (part, model, label, opts = {}) => {
+        const res = new Resource(part, model, label, opts);
     
         // Registrar rotas
         res.register(app);

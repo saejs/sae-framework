@@ -2,19 +2,22 @@ const arr = require("@rhinojs/support/src/arr");
 
 class Resource {
 
-    constructor(resourceUri, model, label) {
-        this.uri = resourceUri;
+    constructor(resourceUri, model, label, opts = {}) {
+        this.uri   = resourceUri;
         this.model = model;
         this.label = label;
+        
+        this.opts  = {};
+        Object.assign(this.opts, opts);
 
         this.actions = {
-            list   : { active: true, register: require('./resources/list') },
-            create : { active: true, register: require('./resources/create') },
-            edit   : { active: true, register: require('./resources/edit') },
-            show   : { active: true, register: require('./resources/show') },
-            store  : { active: true, register: require('./resources/store') },
-            update : { active: true, register: require('./resources/update') },
-            delete : { active: true, register: require('./resources/delete') }
+            list   : { active: arr.get(this.opts, 'actions.list', true),   register: require('./resources/list') },
+            create : { active: arr.get(this.opts, 'actions.create', true), register: require('./resources/create') },
+            edit   : { active: arr.get(this.opts, 'actions.edit', true),   register: require('./resources/edit') },
+            show   : { active: arr.get(this.opts, 'actions.show', true),   register: require('./resources/show') },
+            store  : { active: arr.get(this.opts, 'actions.store', true),  register: require('./resources/store') },
+            update : { active: arr.get(this.opts, 'actions.update', true), register: require('./resources/update') },
+            delete : { active: arr.get(this.opts, 'actions.delete', true), register: require('./resources/delete') }
         };
     }
 
@@ -61,6 +64,15 @@ class Resource {
         var model = new this.model();
 
         return await model.sequelize.transaction();
+    }
+
+    /**
+     * Retorna a lista de atributos para a busca.
+     * 
+     * @returns {Array}
+     */
+    get searchAttrs() {
+        return arr.get(this.opts, 'search', []);
     }
 }
 
