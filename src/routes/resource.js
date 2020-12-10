@@ -8,7 +8,7 @@ class Resource {
         this.label = label;
 
         this.actions = {
-            list   : { active: true, register: this.__actionList },
+            list   : { active: true, register: require('./resources/list') },
             create : { active: true, register: this.__actionCreate },
             edit   : { active: true, register: this.__actionEdit },
             show   : { active: true, register: this.__actionShow },
@@ -28,20 +28,6 @@ class Resource {
             if (action.active) {
                 action.register(app, $this);
             }
-        });
-    }
-
-    /**
-     * Registrar rota LIST
-     */
-    __actionList(app, resource) {
-        app.get(resource.uri, async (req, res) => {
-            res.json({
-                type: 'resource',
-                action: 'LIST',
-                method: 'GET',
-                status: 'OK',
-            });
         });
     }
 
@@ -172,7 +158,7 @@ class Resource {
                     success: true,
                     deleted: count
                 });
-                
+
             } catch (err) {
                 await t.rollback();
                 throw err;
