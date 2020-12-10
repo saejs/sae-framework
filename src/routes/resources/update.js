@@ -1,3 +1,5 @@
+const arr = require("@rhinojs/support/src/arr");
+
 module.exports = (app, resource) => {
     app.put(resource.uri + '/:id', async (req, res) => {
         var t = await resource.__transaction();
