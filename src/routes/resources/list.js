@@ -39,7 +39,7 @@ function listApply_filter_search(query, req, resource) {
     });
 
     if (wheres.length > 0) {
-        query.where[Op.and] = wheres;
+        query.where[Op.or] = wheres;
     }
 }
 
