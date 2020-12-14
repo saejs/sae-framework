@@ -16,7 +16,7 @@ module.exports = (model) => {
         // Mesclar
         Object.assign(where, scope.where);
 
-        model.scope('defaultScope', {
+        model.addScope('defaultScope', {
             where
         });
     }
