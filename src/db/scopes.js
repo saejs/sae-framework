@@ -18,7 +18,7 @@ module.exports = (model) => {
 
         model.addScope('defaultScope', {
             where
-        });
+        }, { override: { default: true }});
     }
 
 }
