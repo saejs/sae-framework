@@ -1,6 +1,6 @@
 'use strict';
 
-const connectionStringParter = (stringConnection) => {
+const connectionStringParser = (stringConnection) => {
     var re = new RegExp("^([a-zA-Z0-9_-]+){1}@([a-zA-Z0-9_\\.-]+){1}\\/([a-zA-Z0-9_]+){1}:(.+){1}(!?:([0-9]+){1})*$");
     var info = re.exec(stringConnection);
     if (!info) {
@@ -17,5 +17,5 @@ const connectionStringParter = (stringConnection) => {
 };
 
 module.exports = {
-    connectionStringParter 
+    connectionStringParser 
 };
