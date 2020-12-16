@@ -32,7 +32,7 @@ module.exports = (pathModels = null) => {
         })
     
         .forEach(file => {
-            const model = require(path.join(pathModels, file))(db.sequelize, db.DataTypes);
+            const model = require(path.join(pathModels, file))(db.sequelize, db.DataTypes, models);
             models[model.name] = model;
         });
     
