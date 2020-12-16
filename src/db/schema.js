@@ -28,6 +28,7 @@ module.exports = {
     association : (table, opts = {}) => {
         var ret = {
             type: Sequelize.STRING(36),
+            allowNull: true,
 
             references: {
                 key: 'id',
@@ -40,10 +41,130 @@ module.exports = {
         return ret;
     },
 
+    /**
+     * Add campo String.
+     * @param {Number} len Largura maxima da string 
+     * @param {*} opts 
+     * @returns {Object}
+     */
+    string: (len = 255, opts = {}) => {
+        var ret = {
+            type: Sequelize.STRING(len),
+            allowNull: true,
+        };
+
+        Object.assign(ret, opts);
+
+        return ret;
+    },
+
+    /**
+     * Add campo Inteiro.
+     * @param {*} opts 
+     * @returns {Object}
+     */
+    integer: (opts = {}) => {
+        var ret = {
+            type: Sequelize.INTEGER,
+            allowNull: true,
+        };
+
+        Object.assign(ret, opts);
+
+        return ret;
+    },
+
+    /**
+     * Add campo Número.
+     * @param {*} opts 
+     * @returns {Object}
+     */
+    number: (opts = {}) => {
+        var ret = {
+            type: Sequelize.DECIMAL(10, 5),
+            allowNull: true,
+        };
+
+        Object.assign(ret, opts);
+
+        return ret;
+    },
+
+    /**
+     * Add campo Lógico.
+     * @param {*} opts 
+     * @returns {Object}
+     */
+    boolean: (opts = {}) => {
+        var ret = {
+            type: Sequelize.BOOLEAN,
+            defaultValue: false,
+        };
+
+        Object.assign(ret, opts);
+
+        return ret;
+    },
+
+    /**
+     * Add campo Data e Hora.
+     * @param {*} opts 
+     * @returns {Object}
+     */
+    dateTime: (opts = {}) => {
+        var ret = {
+            type: Sequelize.DATE,
+            allowNull: true,
+        };
+
+        Object.assign(ret, opts);
+
+        return ret;
+    },
+
+    /**
+     * Add campo Data.
+     * @param {*} opts 
+     * @returns {Object}
+     */
+    date: (opts = {}) => {
+        var ret = {
+            type: Sequelize.DATEONLY,
+            allowNull: true,
+        };
+
+        Object.assign(ret, opts);
+
+        return ret;
+    },
+
+    /**
+     * Add campo Texto.
+     * @param {*} opts 
+     * @returns {Object}
+     */
+    text: (opts = {}) => {
+        var ret = {
+            type: Sequelize.TEXT,
+            allowNull: true,
+        };
+
+        Object.assign(ret, opts);
+
+        return ret;
+    },
+
+    /**
+     * Add campo Enum
+     * @param {Array} values Lista de opções 
+     * @param {*} opts 
+     * @returns {Object}
+     */
     enum: (values, opts = {}) => {
         var ret = {
             type: Sequelize.ENUM,
             values : values,
+            allowNull: true,
         };
 
         Object.assign(ret, opts);
