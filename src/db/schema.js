@@ -98,6 +98,7 @@ module.exports = {
     boolean: (opts = {}) => {
         var ret = {
             type: Sequelize.BOOLEAN,
+            allowNull: false,
             defaultValue: false,
         };
 
