@@ -2,11 +2,17 @@
 
 const Sequelize = require('sequelize');
 const { getSequelizeConfig } = require('./helpers');
+const registerDataTypesCustom = require('./datatypes');
 const config = getSequelizeConfig(true);
 
 if (!config) {
     throw "Config database not found";
 }
+
+//----------------------------------------------------------------------------------------
+// Custom datatypes.
+//----------------------------------------------------------------------------------------
+registerDataTypesCustom();
 
 //----------------------------------------------------------------------------------------
 // Carregar sequelize.
