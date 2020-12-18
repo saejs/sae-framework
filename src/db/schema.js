@@ -189,4 +189,20 @@ module.exports = {
 
         return ret;
     },
+
+    /**
+     * Add campo JSON.
+     * @param {*} opts 
+     * @returns {Object}
+     */
+    json: (opts = {}) => {
+        var ret = {
+            type: Sequelize.JSON,
+            allowNull: true,
+        };
+
+        Object.assign(ret, opts);
+
+        return ret;
+    },
 };
