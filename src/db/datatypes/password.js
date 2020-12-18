@@ -2,7 +2,7 @@ module.exports = (Sequelize) => {
     const DataTypes = Sequelize.DataTypes;
     const BASE_STRING = DataTypes.STRING.prototype.constructor;
 
-    const bc = require("bcryptjs");
+    const hash = require('../../hash');
 
     class PASSWORD extends BASE_STRING
     {
@@ -20,13 +20,7 @@ module.exports = (Sequelize) => {
          * @returns {string}
          */
         _stringify(value) {
-            if (!process.env.PASS_KEY) {
-                return value;
-            }
-
-            // Criptografar senha
-            var salt = bc.genSaltSync(12);
-            return bc.hashSync(value, salt);
+            return hash.make(value);
         }
     }
     
