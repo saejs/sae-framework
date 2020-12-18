@@ -1,33 +1,17 @@
-const { Sequelize, DataTypes, Utils } = require('Sequelize');
+module.exports = (Sequelize) => {
+    const DataTypes = Sequelize.DataTypes;
+    const BASE_STRING = DataTypes.STRING.prototype.constructor;
 
-module.exports = () => {
-    class PASSWORD extends DataTypes.ABSTRACT
+    const bc = require("bcryptjs");
+
+    class PASSWORD extends BASE_STRING
     {
         /**
-         * SQL para criação do tipo do campo.
-         * @returns {String}
+         * Construir uma string de 60 chars
          */
-        toSql() {
-            return 'VARCHAR(50)';
-        }
-
-        /**
-         * Validar valor.
-         * @param {*} value Valor
-         * @param {*} options Opções
-         * @returns {*}
-         */
-        validate(value, options) {
-            return (typeof value === 'string');
-        }
-
-        /**
-         * ???
-         * @param {*} value 
-         * @returns {*}
-         */
-        _sanitize(value) {
-            return value;
+        constructor()
+        {
+            super(60);
         }
 
         /**
@@ -36,37 +20,17 @@ module.exports = () => {
          * @returns {string}
          */
         _stringify(value) {
-            return value;
-        }
+            if (!process.env.PASS_KEY) {
+                return value;
+            }
 
-        /**
-         * Tratamento do valor após carregar do banco de dados para colocar no model.
-         * @param {*} value Valor do banco de dados
-         * @returns {string}
-         */
-        static parse(value) {
-            return value;
+            // Criptografar senha
+            var salt = bc.genSaltSync(12);
+            return bc.hashSync(value, salt);
         }
     }
-
+    
     PASSWORD.prototype.key = PASSWORD.key = 'PASSWORD';
-    DataTypes.PASSWORD = Utils.classToInvokable(PASSWORD);
-
-    // Para mysql
-    const MyTypes = DataTypes.mysql;
-    DataTypes.PASSWORD.types.mysql = ['my_password_type'];
-    MyTypes.PASSWORD = function PASSWORD() {
-        if (!(this instanceof MyTypes.PASSWORD)) {
-            return new MyTypes.PASSWORD();
-        }
-        DataTypes.PASSWORD.apply(this, arguments);
-    }
-    const util = require('util');
-    util.inherits(MyTypes.PASSWORD, DataTypes.PASSWORD);
-
-    MyTypes.PASSWORD.parse      = DataTypes.PASSWORD.parse;
-    MyTypes.PASSWORD.toSql      = DataTypes.PASSWORD.toSql;
-    MyTypes.PASSWORD.validate   = DataTypes.PASSWORD.validate;
-    MyTypes.PASSWORD._sanitize  = DataTypes.PASSWORD._sanitize;
-    MyTypes.PASSWORD._stringify = DataTypes.PASSWORD._stringify;
+    DataTypes.PASSWORD = Sequelize.Utils.classToInvokable(PASSWORD);
+    Sequelize.PASSWORD = DataTypes.PASSWORD;
 };

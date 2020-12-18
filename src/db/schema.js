@@ -171,5 +171,22 @@ module.exports = {
         Object.assign(ret, opts);
 
         return ret;
-    }
+    },
+
+
+    /**
+     * Add campo Password.
+     * @param {*} opts 
+     * @returns {Object}
+     */
+    password: (opts = {}) => {
+        var ret = {
+            type: Sequelize.PASSWORD,
+            allowNull: true,
+        };
+
+        Object.assign(ret, opts);
+
+        return ret;
+    },
 };

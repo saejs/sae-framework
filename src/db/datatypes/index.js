@@ -1,3 +1,3 @@
-module.exports = () => {
-    require('./password')();
+module.exports = (Sequelize) => {
+    require('./password')(Sequelize);
 };
