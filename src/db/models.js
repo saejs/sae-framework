@@ -36,7 +36,12 @@ module.exports = (app) => {
                 const model = require(path.join(pathModels, file))(db.sequelize, db.DataTypes);
 
                 // Atribuir app no objeto model
-                model.$app = app;
+                model.prototype.$app = app;
+                model.app = app;
+
+                // Atribuir db no objeto model
+                model.prototype.$db = db;
+                model.db = db;
 
                 models[model.name] = model;
             });
