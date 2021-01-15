@@ -12,7 +12,7 @@ module.exports = (app, resource) => {
                 obj[key] = value;
             });
 
-            await obj.save({ transaction: t });
+            await obj.save();
 
             await t.commit();
 

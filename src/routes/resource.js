@@ -64,7 +64,7 @@ class Resource {
     async __transaction() {
         var model = new this.model();
 
-        return await model.sequelize.transaction();
+        return await model.$db.transaction.start();
     }
 
     /**

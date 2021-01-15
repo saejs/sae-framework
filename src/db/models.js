@@ -54,6 +54,9 @@ module.exports = (app) => {
             }
         });
 
+        // Registrar DB na lista de models.
+        Object.assign(models, { db });
+
         return models;
     }
 };
