@@ -7,12 +7,12 @@ module.exports = (app) => {
 
             // Carregar version
             if (!fs.existsSync(packageFile)) {
-                return res.error('Versao nao encontrada');
+                return res.error('erro.versao.app.nao.encontrada');
             }
 
             const info = require(packageFile);
             if (!info) {
-                return res.error('Versao nao encontrada');
+                return res.error('erro.versao.app.nao.encontrada');
             }
 
             res.json({

@@ -1,5 +1,5 @@
 module.exports = (app) => {
     app.$route.all('*', (req, res) => {
-        res.error('Recurso nao encontrado', 404);
+        res.error('erro.http.recurso.nao.encontrado');
     });
 }

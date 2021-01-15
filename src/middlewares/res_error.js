@@ -1,17 +1,19 @@
+const ApiError = require('../api_error');
 
 module.exports = () => {
     return (req, res, next) => {
-        res.error = (msg, code) => {
-            code = code ? code : 9000;
+        res.error = (id, data = {}) => {
 
-            var err = {
-                error: {
-                    message: (msg instanceof Error) ? msg.message : msg,
-                    code: code
-                }
-            };
-            
-            res.json(err);
+            var ret = {};
+
+            // Verificar se ja foi informado um ID como uma classe ApiError
+            if ((typeof id == 'object') && (id.constructor.name == 'ApiError')) {
+                ret.error = id;
+            } else {
+                ret.error = new ApiError(id, data);
+            }
+           
+            res.json(ret);
         }
 
         next();

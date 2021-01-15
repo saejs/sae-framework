@@ -10,7 +10,7 @@ module.exports = (app) => {
             try {
                 await callback(req, res);
             } catch (err) {
-                res.error(err, 4000);
+                res.error(err);
             }
         });
     }
@@ -23,7 +23,7 @@ module.exports = (app) => {
             try {
                 await callback(req, res);
             } catch (err) {
-                res.error(err, 4000);
+                res.error(err);
             }
         });
     }
@@ -49,7 +49,7 @@ module.exports = (app) => {
             try {
                 await callback(req, res);
             } catch (err) {
-                res.error(err, 4000) ;
+                res.error(err) ;
             }
         });
     }
@@ -70,7 +70,7 @@ module.exports = (app) => {
             try {
                 await callback(req, res);
             } catch (err) {
-                res.error(err, 4000);
+                res.error(err);
             }
         });
     }

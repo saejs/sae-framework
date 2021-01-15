@@ -1,4 +1,5 @@
 const arr = require("@rhinojs/support/src/arr");
+const ApiError = require("../api_error");
 
 class Resource {
 
@@ -46,7 +47,7 @@ class Resource {
 
         if (model == null) {
             if (createException) {
-                throw new Error(`${this.label} [${id}] nao foi encontrado`);
+                throw ApiError('error.model.nao.encontrado', { label: this.label, id: id});
             }
 
             return null;
