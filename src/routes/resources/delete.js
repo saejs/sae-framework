@@ -14,7 +14,7 @@ module.exports = (app, resource) => {
             for (var i in ids) {
                 var obj = await resource.__getModelById(ids[i], false);
                 if (obj !== null) {
-                    await obj.destroy();
+                    await obj.destroy({ transaction: t });
                     count += 1;
                 }
             }
