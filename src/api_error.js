@@ -16,15 +16,6 @@ class ApiError
                 Object.assign(data, { 
                     message: id.message, 
                     class  : id.constructor.name,
-                    file   : id.fileName,
-                    line   : id.lineNumber
-                });
-            } else if (id instanceof TypeError) {
-                Object.assign(data, { 
-                    message: id.message, 
-                    class  : id.constructor.name,
-                    file   : id.fileName,
-                    line   : id.lineNumber
                 });
             } else {
                 Object.assign(data, { message: id });
