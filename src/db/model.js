@@ -44,7 +44,7 @@ module.exports = (seq, model, tableName, attributes, options = {}) => {
     require('./scopes')(obj);
 
     // Extendes model
-    require('./model_extends')(Model);
+    require('./model_extends')(obj);
 
     return obj;
 };

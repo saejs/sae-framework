@@ -3,6 +3,7 @@
 const Sequelize = require('sequelize');
 const { getSequelizeConfig } = require('./helpers');
 const registerDataTypesCustom = require('./datatypes');
+const Transaction = require('./transaction');
 const config = getSequelizeConfig(true);
 
 if (!config) {
@@ -30,7 +31,5 @@ module.exports = {
     sequelize,
     Sequelize,
     config,
-    transaction: async () => {
-        return await sequelize.transaction();
-    },
+    transaction: new Transaction(sequelize),
 };
