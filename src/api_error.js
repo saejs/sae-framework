@@ -9,7 +9,7 @@ class ApiError
     constructor(id, data = {})
     {
         // Verificar se o ID inicia com o prexido de erro.
-        if (id.substr(0, 5) != 'erro.') {
+        if ((typeof id != 'string') || ((typeof id == 'string') && (id.substr(0, 5) != 'erro.'))) {
             Object.assign(data, { message: id });
             id = 'erro.nao.mapeado';
         }
