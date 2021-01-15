@@ -2,6 +2,7 @@ const Sequelize = require('sequelize');
 const { v4: uuidv4 } = require('uuid');
 const str = require('@rhinojs/support/src/str');
 const arr = require('@rhinojs/support/src/arr');
+const { Model } = require('sequelize');
 
 /**
  * Register new model.
@@ -41,6 +42,9 @@ module.exports = (seq, model, tableName, attributes, options = {}) => {
 
     // Adicionar funcionalidades no model
     require('./scopes')(obj);
+
+    // Extendes model
+    require('./model_extends')(Model);
 
     return obj;
 };
