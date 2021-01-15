@@ -26,9 +26,25 @@ class Transaction{
     }
 
     async start() {
-        if (!this.t) {
-            this.t = await this.sequelize.transaction();
+        if (this.t) {
+            return this.t;
         }
+        
+        // Gerar nova transação
+        var $this = this;
+        var trans = await this.sequelize.transaction();
+
+        this.t = {
+            async commit() {
+                await trans.commit();
+                $this.t = null;
+            },
+
+            async rollback() {
+                await trans.rollback();
+                $this.t = null;
+            }
+        };
 
         return this.t;
     }

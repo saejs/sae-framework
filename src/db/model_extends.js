@@ -30,7 +30,7 @@ module.exports = (Model) => {
     Model.destroy = async function(options = {}) {
 
         // Verificar se deve atribuir a transacao atual
-        this.$db.transaction.apply(options);
+        this.db.transaction.apply(options);
 
         return await this.__destroy(options);
     }
