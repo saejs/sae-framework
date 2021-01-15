@@ -16,7 +16,7 @@ class Transaction{
             return;
         }
 
-        options.transaction = this.t;
+        options.transaction = this.t.transaction;
 
         return true;
     }
@@ -35,6 +35,8 @@ class Transaction{
         var trans = await this.sequelize.transaction();
 
         this.t = {
+            transaction: trans,
+
             async commit() {
                 await trans.commit();
                 $this.t = null;
