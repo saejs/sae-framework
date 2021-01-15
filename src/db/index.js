@@ -1,6 +1,8 @@
-const db = require('./db');
+module.exports = (app) => {
+    const db = require('./db');
 
-// Carregar models
-db.loadModels = require('./models');
+    // Carregar models
+    db.loadModels = require('./models')(app);
 
-module.exports = db;
+    return db;
+};
