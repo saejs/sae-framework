@@ -1,4 +1,4 @@
-const arr = require("@rhinojs/support/src/arr");
+const arr = require("rhinojs/support/arr");
 const ApiError = require("../api_error");
 
 class Resource {

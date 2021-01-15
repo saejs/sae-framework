@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const { v4: uuidv4 } = require('uuid');
-const str = require('@rhinojs/support/src/str');
-const arr = require('@rhinojs/support/src/arr');
+const str = require('rhinojs/support/str');
+const arr = require('rhinojs/support/arr');
 const { Model } = require('sequelize');
 
 /**

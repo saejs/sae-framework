@@ -1,4 +1,4 @@
-const arr = require("@rhinojs/support/src/arr");
+const arr = require("rhinojs/support/arr");
 
 module.exports = (app, resource) => {
     app.post(resource.uri, async (req, res) => {

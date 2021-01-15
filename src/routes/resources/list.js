@@ -1,4 +1,4 @@
-const Arr = require('@rhinojs/support/src/arr');
+const Arr = require('rhinojs/support/arr');
 const { Op } = require('sequelize');
 
 /**
