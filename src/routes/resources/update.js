@@ -1,7 +1,7 @@
 const arr = require("rhinojs/support/arr");
 
 module.exports = (app, resource, middlewares) => {
-    app.put(resource.uri + '/:id', middlewares, async (req, res) => {
+    app.put(resource.uri + '/:id', async (req, res) => {
         var t = await resource.__transaction();
         try {
             var json = req.body;
@@ -21,5 +21,5 @@ module.exports = (app, resource, middlewares) => {
             await t.rollback();
             throw err;
         }
-    });
+    }, middlewares);
 }

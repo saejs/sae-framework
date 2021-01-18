@@ -1,5 +1,5 @@
 module.exports = (app, resource, middlewares) => {
-    app.delete(resource.uri + '/:id?', middlewares, async (req, res) => {
+    app.delete(resource.uri + '/:id?', async (req, res) => {
         var t = await resource.__transaction();
         try {
             // Carregar lista de ids
@@ -30,5 +30,5 @@ module.exports = (app, resource, middlewares) => {
             await t.rollback();
             throw err;
         }
-    });
+    }, middlewares);
 }

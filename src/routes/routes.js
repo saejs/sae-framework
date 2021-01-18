@@ -72,12 +72,11 @@ module.exports = (app) => {
     // Register resources
     app.resource = (part, model, label, opts = {}) => {
         var middlewares = opts.middlewares ? opts.middlewares : [];
-        var middlewares_registrados = app.$middlewares.getAll(middlewares);
 
         const res = new Resource(part, model, label, opts);
     
         // Registrar rotas
-        res.register(app, middlewares_registrados);
+        res.register(app, middlewares);
     }
 
     /**
@@ -107,6 +106,15 @@ module.exports = (app) => {
      * @param {Function} callback Função do middleware
      */
     app.middleware = (id, callback) => {
-        return app.$middlewares.register(id, callback);
+
+        const callbakTratado = async (res, req, next) => {
+            try {
+                return await callback(req, res, next);
+            } catch (err) {
+                return res.error(err);
+            }
+        };
+
+        return app.$middlewares.register(id, callbakTratado);
     }
 }
