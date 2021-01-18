@@ -92,8 +92,8 @@ function listApply_pages(query, req, resource) {
     }
 }
 
-module.exports = (app, resource) => {
-    app.get(resource.uri, async (req, res) => {
+module.exports = (app, resource, middlewares) => {
+    app.get(resource.uri, middlewares, async (req, res) => {
 
         // Gerar nova query
         var query = {};

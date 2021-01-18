@@ -25,12 +25,12 @@ class Resource {
     /**
      * Registrar rotas.
      */
-    register(app) {
+    register(app, middlewares = []) {
         var $this = this;
 
         arr.each(this.actions, (key, action) => {
             if (action.active) {
-                action.register(app, $this);
+                action.register(app, $this, middlewares);
             }
         });
     }
