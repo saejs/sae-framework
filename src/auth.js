@@ -23,6 +23,11 @@ class Auth
         var user = await this.$callgettoken(token);
         this.setUser(user);
 
+        // Verificar se deve disparar o evento de acesso pelo token
+        if (user != null) {
+            this.$app.events.emit('event.usuario.acesso', user, token);
+        }
+
         return (user != null);
     }
 
