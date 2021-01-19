@@ -1,17 +1,21 @@
 const auth = require('../auth');
+const str = require('rhinojs/support/str');
 
 const getAuthHeader = (req) => {
-    var token = req.header('Authorization');
-    if (!token) {
+    var token = req.header.authorization ? req.header.authorization : null;
+    if (token == null) {
         return null;
     }
+
+    // Temporariamente, remover o prefixo "Bearer "
+    token = str.replaceAll('Bearer ', '', token);
 
     return token;
 };
 
 const getAuthQuery = (req) => {
-    var token = req.query('access_token');
-    if (!token) {
+    var token = req.query['access_token'] ? req.query['access_token'] : null;
+    if (token == null) {
         return null;
     }
 
@@ -20,12 +24,12 @@ const getAuthQuery = (req) => {
 
 const getAuthRequest = (req) => {
     var token = getAuthHeader(req);
-    if (!token) {
+    if (token == null) {
         return token;
     }
 
     var token = getAuthQuery(req);
-    if (!token) {
+    if (token == null) {
         return token;
     }
 

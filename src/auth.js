@@ -16,7 +16,7 @@ class Auth
      */
     async load(token) {
         if (!this.$callgettoken) {
-            throw ApiError('erro.auth.load.call.nao.definido');
+            throw new ApiError('erro.auth.load.call.nao.definido');
         }
 
         this.setUser(await this.$callgettoken(token));

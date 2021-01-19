@@ -1,5 +1,3 @@
-const e = require("cors");
-
 class ApiError
 {
     /**
