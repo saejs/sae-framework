@@ -2,7 +2,7 @@ const auth = require('../auth');
 const str = require('rhinojs/support/str');
 
 const getAuthHeader = (req) => {
-    var token = req.header.authorization ? req.header.authorization : null;
+    var token = req.headers.authorization ? req.headers.authorization : null;
     if (token == null) {
         return null;
     }
