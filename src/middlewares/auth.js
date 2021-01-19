@@ -14,22 +14,17 @@ const getAuthHeader = (req) => {
 };
 
 const getAuthQuery = (req) => {
-    var token = req.query['access_token'] ? req.query['access_token'] : null;
-    if (token == null) {
-        return null;
-    }
-
-    return token;
+    return req.query['access_token'] ? req.query['access_token'] : null;
 };
 
 const getAuthRequest = (req) => {
     var token = getAuthHeader(req);
-    if (token == null) {
+    if (token != null) {
         return token;
     }
 
     var token = getAuthQuery(req);
-    if (token == null) {
+    if (token != null) {
         return token;
     }
 
