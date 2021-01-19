@@ -19,9 +19,11 @@ class Auth
             throw new ApiError('erro.auth.load.call.nao.definido');
         }
 
-        this.setUser(await this.$callgettoken(token));
+        // Carregar usuario pelo token
+        var user = await this.$callgettoken(token);
+        this.setUser(user);
 
-        return true;
+        return (user != null);
     }
 
     /**
