@@ -29,7 +29,7 @@ class App {
         routeAlias(this);
 
         // Configurações
-        this.$route.set('json spaces', 4);
+        //this.$route.set('json spaces', 4); // removido por usar o JSON View
 
         this.events = new EventEmitter();
 
