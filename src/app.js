@@ -6,6 +6,7 @@ const EventEmitter = require('events');
 const middlewareJson = require('./middlewares/res_json');
 const middlewareError = require('./middlewares/res_error');
 const middlewareGetClientIp = require('./middlewares/req_getclientip');
+const middlewareAuth = require('./middlewares/auth');
 
 // rotas
 const routeAlias = require('./routes/routes');

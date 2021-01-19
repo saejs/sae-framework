@@ -1,6 +1,7 @@
 const version = require('./version');
 const Resource = require('./resource');
 const Middlewares = require('./middlewares');
+const Auth = require('../middlewares/auth');
 
 module.exports = (app) => {
     /**
@@ -117,4 +118,10 @@ module.exports = (app) => {
 
         return app.$middlewares.register(id, callbakTratado);
     }
+
+    /**
+     * Registrar middlewares padrões.
+     */
+    app.middleware('auth',  Auth.auth());
+    app.middleware('guest', Auth.guest());
 }

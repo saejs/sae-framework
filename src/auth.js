@@ -1,0 +1,83 @@
+const ApiError = require("./api_error");
+
+class Auth
+{
+    constructor() {
+        this.$app = null;
+        this.$user = null;
+        this.$callgettoken = null;
+    }
+
+    /**
+     * Carregar usuário pelo token.
+     * 
+     * @param {string} token Token do usuario
+     * @returns {boolean}
+     */
+    async load(token) {
+        if (!this.$callgettoken) {
+            throw ApiError('erro.auth.load.call.nao.definido');
+        }
+
+        this.setUser(await this.$callgettoken(token));
+
+        return true;
+    }
+
+    /**
+     * Setar objeto app.
+     * 
+     * @param {Object} app 
+     * @returns {Auth}
+     */
+    setApp(app) {
+        this.$app = app;
+
+        return this;
+    }
+
+    /**
+     * Verificar se um usuario esta logado.
+     * @returns {boolean}
+     */
+    check() {
+        return (this.$user != null);
+    }
+
+    /**
+     * Retorna o objeto do usuario logado
+     * @returns {object|null}
+     */
+    user() {
+        if (!this.check()) {
+            return null;
+        }
+
+        return this.$user;
+    }
+
+    /**
+     * Setar object user.
+     * @param {Object} user 
+     * @returns {Auth}
+     */
+    setUser(user) {
+        this.$user = user;
+
+        return this;
+    }
+
+    /**
+     * Carregar contexto do usuário pelo token.
+     * 
+     * @param {Function} callback Função callback para carregar usuário
+     * @returns {Auth}
+     */
+    setCallGetToken(callback) {
+        this.$callgettoken = callback;
+
+        return this;
+    }
+}
+
+module.exports = new Auth();
