@@ -37,14 +37,18 @@ module.exports = {
         return async (req, res, next) => {
             // Verificar se já esta logado.
             if (auth.check()) {
-                return next();
+                next();
+                auth.setUser(null);
+                return;
             }
     
             // Verificar se token foi informado
             var token = getAuthRequest(req);
             if (token) {
                 if (await auth.load(token)) {
-                    return next();
+                    next();
+                    auth.setUser(null);
+                    return;
                 }
             }
 
@@ -57,14 +61,18 @@ module.exports = {
         return async (req, res, next) => {
             // Verificar ainda se já esta logado.
             if (auth.check()) {
+                auth.setUser(null);
                 res.error('erro.auth.usuario.logado');
+                return;
             }
             
             // Verificar se token foi informado
             var token = getAuthRequest(req);
             if (token) {
                 if (await auth.load(token)) {
+                    auth.setUser(null);
                     res.error('erro.auth.usuario.logado');
+                    return;
                 }
             }
 
