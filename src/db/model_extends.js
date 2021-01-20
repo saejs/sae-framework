@@ -72,16 +72,12 @@ module.exports = (Model) => {
     const __destroy = Model.prototype.destroy;
     Model.prototype.__destroy = __destroy;
     Model.prototype.destroy = async function(options = {}) {
-        console.log('> destroy');
-
         __applyWhereModelContext(options, Model);
         
         // Verificar se deve atribuir a transacao atual
         this.$db.transaction.apply(options);
         
-        var ret = await this.__destroy(options);
-        console.log('> destroy 2');
-        return ret;
+        return await this.__destroy(options);
     }
 
 
@@ -91,8 +87,6 @@ module.exports = (Model) => {
     const __destroyStatic = Model.destroy;
     Model.__destroy = __destroyStatic;
     Model.destroy = async function(options = {}) {
-        console.log('> destroy static');
-
         __applyWhereModelContext(options, Model);
 
         // Verificar se deve atribuir a transacao atual
@@ -116,7 +110,6 @@ module.exports = (Model) => {
         arr.each(this.constructor.hiddens, (k, v) => {
             delete values[v];
         });
-
 
         return values;
     }
