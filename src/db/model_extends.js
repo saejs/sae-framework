@@ -1,5 +1,7 @@
 module.exports = (Model) => {
-    // Extender method model "save"
+    /**
+     * Extender method model "save"
+     */
     const __save = Model.prototype.save;
     Model.prototype.__save = __save;
 
@@ -11,7 +13,10 @@ module.exports = (Model) => {
         return await this.__save(options);
     }
 
-    // Extender method model "destroy"
+
+    /**
+     * Extender method model "destroy"
+     */
     const __destroy = Model.prototype.destroy;
     Model.prototype.__destroy = __destroy;
 
@@ -22,8 +27,11 @@ module.exports = (Model) => {
 
         return await this.__destroy(options);
     }
+    
 
-    // Extender method model "destroy"
+    /**
+     * Extender method model "destroy"
+     */
     const __destroyStatic = Model.destroy;
     Model.__destroy = __destroyStatic;
 
