@@ -19,6 +19,8 @@ module.exports = (app) => {
         app.$route.get(part, middlewares_registrados, async (req, res) => {
             try {
                 await callback(req, res);
+
+                await app.events.emit('route.end', req, res);
             } catch (err) {
                 res.error(err);
             }
@@ -34,6 +36,8 @@ module.exports = (app) => {
         app.$route.post(part, middlewares_registrados, async (req, res) => {
             try {
                 await callback(req, res);
+
+                await app.events.emit('route.end', req, res);
             } catch (err) {
                 res.error(err);
             }
@@ -49,6 +53,8 @@ module.exports = (app) => {
         app.$route.put(part, middlewares_registrados, async (req, res) => {
             try {
                 await callback(req, res);
+
+                await app.events.emit('route.end', req, res);
             } catch (err) {
                 res.error(err);
             }
@@ -64,6 +70,8 @@ module.exports = (app) => {
         app.$route.delete(part, middlewares_registrados, async (req, res) => {
             try {
                 await callback(req, res);
+
+                await app.events.emit('route.end', req, res);
             } catch (err) {
                 res.error(err) ;
             }
@@ -89,6 +97,8 @@ module.exports = (app) => {
         app.$route.all(part, middlewares_registrados, async (req, res) => {
             try {
                 await callback(req, res);
+                
+                await app.events.emit('route.end', req, res);
             } catch (err) {
                 res.error(err);
             }
