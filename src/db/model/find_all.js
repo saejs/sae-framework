@@ -3,7 +3,7 @@ module.exports = (Model) => {
     Model.__findAll = __findAll;
     Model.findAll = async function (options = {}) {
         // Aplicar os filtros de contexto
-        this.setWhereContext(options);
+        this.setWhereContext(this, options);
 
         // Executar o findAll original
         return await this.__findAll(options);

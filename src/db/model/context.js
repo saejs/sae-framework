@@ -85,9 +85,9 @@ module.exports = (Model) => {
      * 
      * @param {Object} options 
      */
-    Model.__setWhereContextTenant = (options) => {
+    Model.__setWhereContextTenant = (model, options) => {
         // Verificar se é por inquilino
-        if (!this.context.byTenant) {
+        if (!model.context.byTenant) {
             return false;            
         }
 
@@ -95,9 +95,9 @@ module.exports = (Model) => {
 
         // Verificar se usuario esta logado
         if (user) {
-            options.where[this.context.tenant_attr] = user[this.context.tenant_attr];
+            options.where[model.context.tenant_attr] = user[model.context.tenant_attr];
         } else {
-            options.where[this.context.tenant_attr] = '???';
+            options.where[model.context.tenant_attr] = '???';
         }
 
         return true;
@@ -108,9 +108,9 @@ module.exports = (Model) => {
      * 
      * @param {Object} options 
      */
-    Model.__setWhereContextUser = (options) => {
+    Model.__setWhereContextUser = (model, options) => {
         // Verificar se é por usuario
-        if (!this.context.byUser) {
+        if (!model.context.byUser) {
             return false;            
         }
 
@@ -118,9 +118,9 @@ module.exports = (Model) => {
 
         // Verificar se usuario esta logado
         if (user) {
-            options.where[this.context.user_attr] = user.id;
+            options.where[model.context.user_attr] = user.id;
         } else {
-            options.where[this.context.user_attr] = '???';
+            options.where[model.context.user_attr] = '???';
         }
 
         return true;
@@ -130,7 +130,7 @@ module.exports = (Model) => {
      * Aplicar 
      * @param {Object} options 
      */
-    Model.setWhereContext = (options) => {
+    Model.setWhereContext = (model, options) => {
         options = (options == undefined) ? {} : options;
 
         // Verificar se where esta implementado
@@ -139,9 +139,9 @@ module.exports = (Model) => {
         }
 
         // Verificar se é por inquilino
-        this.__setWhereContextTenant(options);
+        model.__setWhereContextTenant(model, options);
 
         // Verificar se é por usuario
-        this.__setWhereContextUser(options);
+        model.__setWhereContextUser(model, options);
     }
 }
