@@ -1,11 +1,11 @@
-module.exports = (model) => {
+module.exports = (Model) => {
 
     /**
      * Definir escopo padrao.
      * 
      * @param {Object} scope Objeto do escopo.
      */
-    model.scopeDefault = (scope) => {
+    Model.scopeDefault = (scope) => {
         var _scope = model.scope('defaultScope')._scope;
 
         var where = {};
@@ -18,7 +18,6 @@ module.exports = (model) => {
 
         model.addScope('defaultScope', {
             where
-        }, { override: { default: true }});
+        }, { override: { default: true } });
     }
-
 }

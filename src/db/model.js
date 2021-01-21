@@ -36,13 +36,10 @@ module.exports = (seq, model, tableName, attributes, options = {}) => {
     };
     Object.assign(opts, options);
 
-    var obj = seq.define(model, attrs, opts);
-
-    // Adicionar funcionalidades no model
-    require('./scopes')(obj);
+    var Model = seq.define(model, attrs, opts);
 
     // Extendes model
-    require('./model_extends')(obj);
+    require('./model/extend')(Model);
 
     return obj;
 };
