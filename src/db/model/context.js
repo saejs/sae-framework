@@ -1,4 +1,4 @@
-const auth = require('../auth');
+const auth = require('../../auth');
 const ApiError = require('../../api_error');
 
 module.exports = (Model) => {
