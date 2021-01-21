@@ -1,11 +1,11 @@
-const utils = require('./utils');
-
 module.exports = (Model) => {
     const __findAll = Model.findAll;
     Model.__findAll = __findAll;
     Model.findAll = async function (options = {}) {
-        utils.applyWhereModelContext(options, Model);
+        // Aplicar os filtros de contexto
+        this.setWhereContext(options);
 
+        // Executar o findAll original
         return await this.__findAll(options);
     }
 }

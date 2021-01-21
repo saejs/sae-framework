@@ -5,6 +5,11 @@ module.exports = (Model) => {
     require('./scope')(Model);
 
     /**
+     * Add controles de contexto no model
+     */
+    require('./context')(Model);
+
+    /**
      * Extender method model "findAll"
      */
     require('./find_all')(Model);
