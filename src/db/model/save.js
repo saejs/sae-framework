@@ -6,7 +6,7 @@ module.exports = (Model) => {
         this.$db.transaction.apply(options);
 
         // Aplicar atributos de contexto
-        this.setAttributesContext();
+        this.setAttributesContext(this);
 
         // Executar o save original
         return await this.__save(options);

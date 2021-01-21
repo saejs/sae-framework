@@ -19,14 +19,14 @@ module.exports = (Model) => {
     /**
      * Informar attributo por inquilino.
      */
-    Model.prototype.__setAttributesTenant = () => {
+    Model.prototype.__setAttributesTenant = (model) => {
         // Verificar se é por inquilino
-        if (!this.constructor.context.byTenant) {
+        if (!model.constructor.context.byTenant) {
             return false;            
         }
 
         // Verificar se atributo já foi informado
-        if (this[this.constructor.context.tenant_attr]) {
+        if (model[model.constructor.context.tenant_attr]) {
             return false;
         }
 
@@ -37,7 +37,7 @@ module.exports = (Model) => {
         }
 
         // Atribuir attributo do model pelo inquilino logado do usuario.
-        this[this.constructor.context.tenant_attr] = user[this.constructor.context.tenant_attr];
+        model[model.constructor.context.tenant_attr] = user[model.constructor.context.tenant_attr];
 
         return true;
     }
@@ -45,14 +45,14 @@ module.exports = (Model) => {
     /**
      * Informar attributo por usuario.
      */
-    Model.prototype.__setAttributesUser = () => {
+    Model.prototype.__setAttributesUser = (model) => {
         // Verificar se é por usuario
-        if (!this.constructor.context.byUser) {
+        if (!model.constructor.context.byUser) {
             return false;            
         }
 
         // Verificar se atributo já foi informado
-        if (this[this.constructor.context.user_attr]) {
+        if (model[model.constructor.context.user_attr]) {
             return false;
         }
 
@@ -63,7 +63,7 @@ module.exports = (Model) => {
         }
 
         // Atribuir attributo do model pelo usuario logado do usuario.
-        this[this.constructor.context.user_attr] = user.id;
+        model[model.constructor.context.user_attr] = user.id;
 
         return true;
     }
@@ -72,12 +72,12 @@ module.exports = (Model) => {
     /**
      * Atribuir controle de contexto.
      */
-    Model.prototype.setAttributesContext = () => {
+    Model.prototype.setAttributesContext = (model) => {
         // Verificar se é por inquilino
-        this.__setAttributesTenant();
+        model.__setAttributesTenant(model);
 
         // Verificar se é por usuário
-        this.__setAttributesUser();
+        model.__setAttributesUser(model);
     }
 
     /**
