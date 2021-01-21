@@ -38,7 +38,6 @@ module.exports = {
             // Verificar se já esta logado.
             if (auth.check()) {
                 next();
-                //auth.setUser(null); // movido para route.end
                 return;
             }
     
@@ -47,7 +46,6 @@ module.exports = {
             if (token) {
                 if (await auth.load(token)) {
                     next();
-                    //auth.setUser(null); // movido para route.end
                     return;
                 }
             }
@@ -61,7 +59,6 @@ module.exports = {
         return async (req, res, next) => {
             // Verificar ainda se já esta logado.
             if (auth.check()) {
-                //auth.setUser(null); // movido para route.end
                 res.error('erro.auth.usuario.logado');
                 return;
             }
@@ -70,7 +67,6 @@ module.exports = {
             var token = getAuthRequest(req);
             if (token) {
                 if (await auth.load(token)) {
-                    //auth.setUser(null); // movido para route.end
                     res.error('erro.auth.usuario.logado');
                     return;
                 }
