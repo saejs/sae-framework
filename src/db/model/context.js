@@ -133,6 +133,11 @@ module.exports = (Model) => {
     Model.setWhereContext = (model, options) => {
         options = (options == undefined) ? {} : options;
 
+        // Verificar se deve ignorar o contexto
+        if (options.uncontext) {
+            return false;
+        }
+
         // Verificar se where esta implementado
         if (!options.where) {
             options.where = {};

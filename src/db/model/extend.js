@@ -12,12 +12,7 @@ module.exports = (Model) => {
     /**
      * Extender method model "findAll"
      */
-    require('./find_all')(Model);
-
-    /**
-     * Extender method model "findOne"
-     */
-    require('./find_one')(Model);
+    require('./find')(Model);
 
     /**
      * Extender method model "save"
