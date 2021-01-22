@@ -1,6 +1,7 @@
 const cors = require('cors');
 const express = require("express");
-const EventEmitter = require('events');
+//const EventEmitter = require('events');
+const EventEmitter = require('./events');
 
 // middlewares
 const middlewareJson = require('./middlewares/res_json');
