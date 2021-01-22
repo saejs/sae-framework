@@ -11,7 +11,7 @@ app.hash = require('./hash');
 
 // Zerar auth apos o termino do route
 app.on('route.end', async () => {
-    auth.setUser(null);
+    auth.clear();
 });
 
 module.exports = app;

@@ -5,6 +5,7 @@ class Auth
     constructor() {
         this.$app = null;
         this.$user = null;
+        this.$token = null;
         this.$callgettoken = null;
     }
 
@@ -25,6 +26,7 @@ class Auth
 
         // Verificar se deve disparar o evento de acesso pelo token
         if (user != null) {
+            this.$token = token;
             this.$app.events.emit('event.usuario.acesso', user, token);
         }
 
@@ -61,6 +63,22 @@ class Auth
         }
 
         return this.$user;
+    }
+
+    /**
+     * Retorna o accesstoken utilizado no login.
+     * @returns {string}
+     */
+    getAccessToken() {
+        return this.$token;
+    }
+
+    /**
+     * Limpar controles do auth.
+     */
+    clear() {
+        this.setUser(null);
+        this.$token = null;
     }
 
     /**
