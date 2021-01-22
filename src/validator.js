@@ -15,6 +15,7 @@ validatorRules.opcoes         = (str, values) => { return validator.isIn(str, va
 validatorRules.ip             = (str, version = 4) => { return validator.isIP(str, version); };
 validatorRules.json           = (str, opts) => { return validator.isJSON(str, opts); };
 validatorRules.url            = (str, opts) => { return validator.isURL(str, opts); };
+validatorRules.len            = (str, opts) => { return validator.isLength(str, opts); };
 
 const _validatorArgs = (ruleOpts) => {
     return [ruleOpts];
