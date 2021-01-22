@@ -12,8 +12,7 @@ class Events
      * @returns {boolean}
      */
     async emit(eventId) {
-        const payload = arguments;
-        delete payload[0];
+        const payload = Array.prototype.slice.call(arguments).slice(1);
 
         if (!this.list[eventId]) {
             return false;
@@ -22,8 +21,8 @@ class Events
         for (var i = 0; i < this.list[eventId].length; i++) {
             var eventCall = this.list[eventId][i];
 
-            // Executar
-            await eventCall.apply(payload);
+            // Executar evento sync
+            await eventCall.apply(null, payload);
         }
 
         return true;
