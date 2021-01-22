@@ -33,21 +33,25 @@ const getAuthRequest = (req) => {
 
 
 module.exports = {
+    prepare: () => {
+        return async (req, res, next) => {
+            // Verificar se token foi informado no contexto
+            var token = getAuthRequest(req);
+            if (token) {
+                // Tentar carregar token
+                await auth.load(token);
+            }
+
+            next();
+        }
+    },
+
     auth: () => {
         return async (req, res, next) => {
-            // Verificar se já esta logado.
+            // Verificar se ESTA logado.
             if (auth.check()) {
                 next();
                 return;
-            }
-    
-            // Verificar se token foi informado
-            var token = getAuthRequest(req);
-            if (token) {
-                if (await auth.load(token)) {
-                    next();
-                    return;
-                }
             }
 
             // Gerar erro
@@ -57,22 +61,13 @@ module.exports = {
 
     guest: () => {
         return async (req, res, next) => {
-            // Verificar ainda se já esta logado.
-            if (auth.check()) {
-                res.error('erro.auth.usuario.logado');
+            // Verificar se NÃO esta logado.
+            if (!auth.check()) {
+                next();
                 return;
             }
-            
-            // Verificar se token foi informado
-            var token = getAuthRequest(req);
-            if (token) {
-                if (await auth.load(token)) {
-                    res.error('erro.auth.usuario.logado');
-                    return;
-                }
-            }
 
-            return next();
+            res.error('erro.auth.usuario.logado');
         }    
     }
 }

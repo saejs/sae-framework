@@ -6,6 +6,7 @@ const EventEmitter = require('events');
 const middlewareJson = require('./middlewares/res_json');
 const middlewareError = require('./middlewares/res_error');
 const middlewareGetClientIp = require('./middlewares/req_getclientip');
+const middlewareAuth = require('./middlewares/auth');
 
 // rotas
 const routeAlias = require('./routes/routes');
@@ -51,6 +52,7 @@ class App {
         this.$route.use(middlewareError());
         this.$route.use(middlewareJson());
         this.$route.use(middlewareGetClientIp());
+        this.$route.use(middlewareAuth.prepare());
 
         // Event para registrar middlewares
         this.events.emit('booted', this, this.$route);
