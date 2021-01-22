@@ -4,10 +4,11 @@ const express = require("express");
 const EventEmitter = require('./events');
 
 // middlewares
-const middlewareJson = require('./middlewares/res_json');
-const middlewareError = require('./middlewares/res_error');
-const middlewareGetClientIp = require('./middlewares/req_getclientip');
-const middlewareValidate = require('./middlewares/req_validate');
+const middlewareResJson = require('./middlewares/res_json');
+const middlewareResError = require('./middlewares/res_error');
+const middlewareReqGetClientIp = require('./middlewares/req_getclientip');
+const middlewareReqValidate = require('./middlewares/req_validate');
+const middlewareReqJson = require('./middlewares/req_json');
 const middlewareAuth = require('./middlewares/auth');
 
 // rotas
@@ -51,10 +52,11 @@ class App {
         this.$route.use(express.json());
 
         // Middlewares controles
-        this.$route.use(middlewareError());
-        this.$route.use(middlewareJson());
-        this.$route.use(middlewareGetClientIp());
-        this.$route.use(middlewareValidate());
+        this.$route.use(middlewareResError());
+        this.$route.use(middlewareResJson());
+        this.$route.use(middlewareReqGetClientIp());
+        this.$route.use(middlewareReqJson());
+        this.$route.use(middlewareReqValidate());
         this.$route.use(middlewareAuth.prepare());
 
         // Event para registrar middlewares
