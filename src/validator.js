@@ -16,6 +16,10 @@ validatorRules.ip             = (str, version = 4) => { return validator.isIP(st
 validatorRules.json           = (str, opts) => { return validator.isJSON(str, opts); };
 validatorRules.url            = (str, opts) => { return validator.isURL(str, opts); };
 
+const _validatorArgs = (ruleOpts) => {
+    return [ruleOpts];
+}
+
 const _validarAttrRule = async (value, ruleName, ruleOpts, attrName, errors) => {
     const valueString = String(value);
 
@@ -24,8 +28,11 @@ const _validarAttrRule = async (value, ruleName, ruleOpts, attrName, errors) => 
         throw new ApiError('erro.validacao.regra.nao.encontrada', ruleName);
     }
 
+    // Carregar argumento da regra
+    const validatorArgs = _validatorArgs(ruleOpts);
+
     // Executar regra
-    if (!validatorRules[ruleName](valueString)) {
+    if (!validatorRules[ruleName](valueString, ...validatorArgs)) {
         errors.push({
             error_id : 'erro.validacao.regra.' + ruleName.toLowerCase(),
             attr     : attrName,
