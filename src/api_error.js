@@ -10,16 +10,13 @@ class ApiError
     {
         // Verificar se o ID inicia com o prexido de erro.
         if (typeof id == 'object') {
-            if (id instanceof Error) {
-                Object.assign(data, { 
-                    message: id.message, 
-                    class  : id.constructor.name,
-                });
+            var id_tratado = this.__checkErrorMapeados(id, data);
+            if (id_tratado) {
+                id = id_tratado;                
             } else {
-                Object.assign(data, { message: id });
+                data.message = id;
+                id = 'erro.nao.mapeado';
             }
-
-            id = 'erro.nao.mapeado';
         }
 
         // Verificar strings
@@ -30,6 +27,36 @@ class ApiError
         
         this.id = id;
         this.data = data;
+    }
+
+    __checkErrorMapeados(err, data) {
+        if (!(err instanceof Error)) {
+            return false;
+        }
+
+        data.class = err.constructor.name;
+
+        // Verificar se UniqueConstraintError do sequelize
+        if (err.constructor.name == 'UniqueConstraintError') {
+            data.fields = err.fields;
+            return 'erro.db.atributo.unico';
+        }
+
+        // Verificar se ValidationError do sequelize
+        if (err.constructor.name == 'ValidationError') {
+            data.message = err.message;       
+            data.errors = err.errors.map((item) => {
+                return {
+                    attr   : item.path,
+                    message: item.message
+                };
+            });
+            return 'erro.db.atributo.validar';
+        }
+
+        data.message = err.message;       
+
+        return 'erro.nao.mapeado';
     }
 }
 
