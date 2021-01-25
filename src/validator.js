@@ -22,7 +22,7 @@ const _validatorArgs = (ruleOpts) => {
 }
 
 const _validarAttrRule = async (value, ruleName, ruleOpts, attrName, errors) => {
-    const valueString = String(value);
+    const valueString = String((value == undefined) ? '' : value);
 
     // Verificar se regra existe
     if (typeof validatorRules[ruleName] !== 'function') {
@@ -40,7 +40,11 @@ const _validarAttrRule = async (value, ruleName, ruleOpts, attrName, errors) => 
             rule     : ruleName,
             value    : valueString,
         });
+
+        return false;
     }
+
+    return true;
 };
 
 const _validarAttrRules = async (value, rules, attrName, errors) => {
@@ -49,7 +53,10 @@ const _validarAttrRules = async (value, rules, attrName, errors) => {
         const ruleName = keyRules[i];
         const ruleOpts = rules[ruleName];
 
-        await _validarAttrRule(value, ruleName, ruleOpts, attrName, errors);
+        var ret = await _validarAttrRule(value, ruleName, ruleOpts, attrName, errors);
+        if (!ret) {
+            break;
+        }
     }
 };
 
