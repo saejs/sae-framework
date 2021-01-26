@@ -36,7 +36,7 @@ class App {
 
         this.events = new EventEmitter();
 
-        this.boot();
+        //this.boot(); Não executando o boot no create, para poder dar tempo de alguma especificação usar o evento booted
     }
 
     /**
