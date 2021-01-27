@@ -16,13 +16,18 @@ validatorRules.ip             = (str, version = 4) => { return validator.isIP(st
 validatorRules.json           = (str, opts) => { return validator.isJSON(str, opts); };
 validatorRules.url            = (str, opts) => { return validator.isURL(str, opts); };
 validatorRules.len            = (str, opts) => { return validator.isLength(str, opts); };
+validatorRules.subitens       = async (str, opts, attrName, errors) => { 
+    await _validar(str, opts, errors, attrName + '.');
+    
+    return true;
+};
 
-const _validatorArgs = (ruleOpts) => {
-    return [ruleOpts];
+const _validatorArgs = (ruleOpts, attrName, errors) => {
+    return [ruleOpts, attrName, errors];
 }
 
 const _validarAttrRule = async (value, ruleName, ruleOpts, attrName, errors) => {
-    const valueString = String((value == undefined) ? '' : value);
+    const validarValue = (ruleName == 'subitens') ? value : (String((value == undefined) ? '' : value));
 
     // Verificar se regra existe
     if (typeof validatorRules[ruleName] !== 'function') {
@@ -30,15 +35,15 @@ const _validarAttrRule = async (value, ruleName, ruleOpts, attrName, errors) => 
     }
 
     // Carregar argumento da regra
-    const validatorArgs = _validatorArgs(ruleOpts);
+    const validatorArgs = _validatorArgs(ruleOpts, attrName, errors);
 
     // Executar regra
-    if (!validatorRules[ruleName](valueString, ...validatorArgs)) {
+    if (!await validatorRules[ruleName](validarValue, ...validatorArgs)) {
         errors.push({
             error_id : 'erro.validacao.regra.' + ruleName.toLowerCase(),
             attr     : attrName,
             rule     : ruleName,
-            value    : valueString,
+            value    : validarValue,
         });
 
         return false;
@@ -60,6 +65,16 @@ const _validarAttrRules = async (value, rules, attrName, errors) => {
     }
 };
 
+const _validar = async (data, rules, errors, prefix = '') => {
+    var keys = Object.keys(rules);
+    for (var i = 0; i < keys.length; i++) {
+        var attr      = keys[i];
+        var rulesAttr = rules[attr];
+
+        await _validarAttrRules(data[attr], rulesAttr, prefix + attr, errors);
+    }
+};
+
 class Validator
 {
     /**
@@ -73,13 +88,8 @@ class Validator
         var errors = [];
         data = (data) ? data : {};
 
-        var keys = Object.keys(rules);
-        for (var i = 0; i < keys.length; i++) {
-            var attr      = keys[i];
-            var rulesAttr = rules[attr];
-
-            await _validarAttrRules(data[attr], rulesAttr, attr, errors);
-        }
+        // Executar regra de validação
+        await _validar(data, rules, errors);
 
         return errors;
     }
