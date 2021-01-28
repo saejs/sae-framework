@@ -13,7 +13,7 @@ module.exports = () => {
                 ret.error = new ApiError(id, data);
             }
            
-            res.json(ret);
+            res.status(400).json(ret);
         }
 
         next();
