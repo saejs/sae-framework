@@ -205,4 +205,19 @@ module.exports = {
 
         return ret;
     },
+
+    /**
+     * Add campo VIRTUAL.
+     * @param {*} opts 
+     * @returns {Object}
+     */
+    virtual: (opts = {}) => {
+        var ret = {
+            type: Sequelize.VIRTUAL,
+        };
+
+        Object.assign(ret, opts);
+
+        return ret;
+    },
 };
