@@ -1,3 +1,5 @@
+const carbon = require('rhinojs/support/carbon');
+
 module.exports = (Sequelize) => {
     const DataTypes = Sequelize.DataTypes;
     const BASE_DATEONLY = DataTypes.DATEONLY.prototype.constructor;
@@ -5,11 +7,19 @@ module.exports = (Sequelize) => {
     class NF_DATEONLY extends BASE_DATEONLY
     {
         /**
-         * TRanformar o valor em data e hora depois de pegar no banco.
+         * Tranformar o valor em data e hora depois de pegar no banco.
          * @param {*} value Valor do model
          * @returns {Date|null}
          */
-        static parse(value) {
+        _sanitize(value) {
+            if (!value) {
+                return value;
+            }
+
+            if ((typeof value == 'string') && (value != '')) {
+                value = carbon.createFromFormat(value, 'yyyy-MM-dd');
+            }
+
             return value;
         }
     }

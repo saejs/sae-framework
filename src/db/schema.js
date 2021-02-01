@@ -130,7 +130,7 @@ module.exports = {
      */
     date: (opts = {}) => {
         var ret = {
-            type: Sequelize.DATEONLY,
+            type: Sequelize.NF_DATEONLY,
             allowNull: true,
         };
 
