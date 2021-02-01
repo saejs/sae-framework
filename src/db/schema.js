@@ -114,7 +114,7 @@ module.exports = {
      */
     dateTime: (opts = {}) => {
         var ret = {
-            type: Sequelize.DATE,
+            type: Sequelize.NF_DATE,
             allowNull: true,
         };
 

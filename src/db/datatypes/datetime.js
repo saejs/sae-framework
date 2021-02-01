@@ -5,11 +5,19 @@ module.exports = (Sequelize) => {
     class NF_DATE extends BASE_DATE
     {
         /**
-         * TRanformar o valor em data e hora depois de pegar no banco.
+         * Tranformar o valor em data e hora depois de pegar no banco.
          * @param {*} value Valor do model
          * @returns {Date|null}
          */
-        static parse(value) {
+        _sanitize(value) {
+            if (!value) {
+                return value;
+            }
+
+            if ((typeof value == 'string') && (value != '')) {
+                value = carbon.createFromFormat(value, 'yyyy-MM-dd hh:mm:ss');
+            }
+
             return value;
         }
     }
