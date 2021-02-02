@@ -48,7 +48,7 @@ class App {
         }
 
         // Middlewares padrao
-        this.$route.use(cors({ origin: '*' }));
+        this.$route.use(cors({ origin: '*', methods: '*', allowedHeaders: '*' }));
         this.$route.use(express.json());
 
         // Middlewares controles
