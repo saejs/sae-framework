@@ -10,21 +10,24 @@ module.exports = (app) => {
     app.$middlewares = new Middlewares();
 
     /**
-     * Alias GET
+     * Alias GET,OPTIONS
      */
     app.get = (part, callback, middlewares = []) => {
-
         var middlewares_registrados = app.$middlewares.getAll(middlewares);
+        var methods = ['get','head'];
 
-        app.$route.get(part, middlewares_registrados, async (req, res) => {
-            try {
-                await callback(req, res);
-
-                await app.events.emit('route.end', req, res);
-            } catch (err) {
-                res.error(err);
-            }
-        });
+        for (var i = 0; i < methods.length; i++) {
+            var method = methods[i];
+            app.$route[method](part, middlewares_registrados, async (req, res) => {
+                try {
+                    await callback(req, res);
+    
+                    await app.events.emit('route.end', req, res);
+                } catch (err) {
+                    res.error(err);
+                }
+            });
+        }
     }
 
     /**
