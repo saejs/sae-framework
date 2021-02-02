@@ -112,9 +112,14 @@ module.exports = {
      * @param {*} opts 
      * @returns {Object}
      */
-    dateTime: (opts = {}) => {
+    dateTime: (opts = {}, migration = false) => {
+        if (typeof opts == 'boolean') {
+            migration = opts;
+            opts = {};
+        }
+
         var ret = {
-            type: Sequelize.NF_DATE,
+            type: migration ? Sequelize.DATE : Sequelize.NF_DATE,
             allowNull: true,
         };
 
@@ -128,9 +133,14 @@ module.exports = {
      * @param {*} opts 
      * @returns {Object}
      */
-    date: (opts = {}) => {
+    date: (opts = {}, migration = false) => {
+        if (typeof opts == 'boolean') {
+            migration = opts;
+            opts = {};
+        }
+        
         var ret = {
-            type: Sequelize.NF_DATEONLY,
+            type: migration ? Sequelize.DATEONLY : Sequelize.NF_DATEONLY,
             allowNull: true,
         };
 
