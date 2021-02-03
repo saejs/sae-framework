@@ -1,10 +1,8 @@
-//const cors = require('cors');
+const cors = require('cors');
 const express = require("express");
-//const EventEmitter = require('events');
 const EventEmitter = require('./events');
 
 // middlewares
-const middlewareCors = require('./middlewares/cors');
 const middlewareResJson = require('./middlewares/res_json');
 const middlewareResError = require('./middlewares/res_error');
 const middlewareReqGetClientIp = require('./middlewares/req_getclientip');
@@ -49,8 +47,7 @@ class App {
         }
 
         // Middlewares padrao
-        //this.$route.use(cors({ origin: '*', methods: '*', allowedHeaders: '*', preflightContinue: true }));
-        this.$route.use(middlewareCors());
+        this.$route.use(cors({ origin: '*', methods: '*', allowedHeaders: '*', preflightContinue: true }));
         this.$route.use(express.json());
 
         // Middlewares controles

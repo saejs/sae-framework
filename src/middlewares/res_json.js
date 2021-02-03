@@ -7,7 +7,8 @@ module.exports = () => {
 
             //obj = this.$prepareObjectToJson(obj);
 
-            res.set('Content-Type', 'application/json');
+            res.set('Content-Type',  'application/json');
+            res.set('Cache-Control', 'no-cache');
             res.__json(obj);
         };
 
