@@ -123,7 +123,7 @@ module.exports = {
         }
 
         var ret = {
-            type: migration ? Sequelize.DATE : Sequelize.NF_DATE,
+            type: Sequelize.DATE,
             allowNull: true,
             set(value, name) {
                 muttations.date.set(this, name, value, 'yyyy-MM-dd hh:mm:ss');
@@ -147,7 +147,7 @@ module.exports = {
         }
         
         var ret = {
-            type: migration ? Sequelize.DATEONLY : Sequelize.NF_DATEONLY,
+            type: Sequelize.DATEONLY,
             allowNull: true,
             set(value, name) {
                 muttations.date.set(this, name, value, 'yyyy-MM-dd');
