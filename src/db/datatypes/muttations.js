@@ -20,7 +20,7 @@ const __functionDateSet = (model, nome, value, format) => {
  */
 const __functionNumberGet = (model, nome) => {
     var value = model.getDataValue(nome);
-    if (value != null) {
+    if (value == null) {
         return value;
     }
 
