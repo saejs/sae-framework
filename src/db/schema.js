@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize');
+const muttations = require('./datatypes/muttations');
 
 module.exports = {
     /**
@@ -83,6 +84,9 @@ module.exports = {
         var ret = {
             type: Sequelize.DECIMAL(10, 5),
             allowNull: true,
+            get(nome) {
+                return muttations.number.get(this, nome);
+            }
         };
 
         Object.assign(ret, opts);
@@ -121,6 +125,9 @@ module.exports = {
         var ret = {
             type: migration ? Sequelize.DATE : Sequelize.NF_DATE,
             allowNull: true,
+            set(value, name) {
+                muttations.date.set(this, name, value, 'yyyy-MM-dd hh:mm:ss');
+            }
         };
 
         Object.assign(ret, opts);
@@ -142,6 +149,9 @@ module.exports = {
         var ret = {
             type: migration ? Sequelize.DATEONLY : Sequelize.NF_DATEONLY,
             allowNull: true,
+            set(value, name) {
+                muttations.date.set(this, name, value, 'yyyy-MM-dd');
+            }
         };
 
         Object.assign(ret, opts);
