@@ -43,9 +43,15 @@ class Middlewares
 
         // Verificar se middleware esta registrado e montar lista.
         for (var i = 0; i < ids.length; i++) {
-            var middleware = this.get(ids[i]);
-            if (middleware) {
-                rets.push(middleware);
+            if (typeof ids[i] == 'function') {
+                rets.push(ids[i]);
+            }
+
+            if (typeof ids[i] == 'string') {
+                var middleware = this.get(ids[i]);
+                if (middleware) {
+                    rets.push(middleware);
+                }
             }
         }
 
