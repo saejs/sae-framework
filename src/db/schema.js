@@ -217,8 +217,17 @@ module.exports = {
      */
     json: (opts = {}) => {
         var ret = {
-            type: Sequelize.JSON,
+            type: Sequelize.TEXT,
             allowNull: true,
+
+            get(nome) {
+                var ret = JSON.parse(this.getDataValue(nome));
+                return (!ret) ? {} : ret;
+            },
+
+            set(value, nome) {
+                this.setDataValue(nome, ((typeof value == 'object') ? JSON.stringify(value) : '{}'));
+            }
         };
 
         Object.assign(ret, opts);
