@@ -5,6 +5,7 @@ module.exports = () => {
         req.getClientIp = () => {
             var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
+            /*
             var exp = /([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)+/;
             var match = exp.exec(ip);
             if (!match) {
@@ -12,6 +13,9 @@ module.exports = () => {
             }
 
             return match[1];
+            */
+
+            return ip;
         };
         
         next();
