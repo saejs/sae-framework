@@ -3,7 +3,8 @@ module.exports = () => {
     return (req, res, next) => {
 
         req.getClientIp = () => {
-            var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+            var ip = String(req.headers['x-forwarded-for'] || req.connection.remoteAddress);
+            var ips = ip.trim().split(',');
 
             /*
             var exp = /([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)+/;
@@ -15,7 +16,7 @@ module.exports = () => {
             return match[1];
             */
 
-            return ip;
+            return ips[0].trim();
         };
         
         next();
