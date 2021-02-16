@@ -42,6 +42,13 @@ class ApiError
             return 'erro.db.atributo.unico';
         }
 
+        // Verificar se DatabaseError do sequelize
+        if (err.constructor.name == 'DatabaseError') {
+            data.message = err.message;
+            data.sql     = err.sql;
+            return 'erro.db.sql';
+        }
+
         // Verificar se ValidationError do sequelize
         if (err.constructor.name == 'ValidationError') {
             data.message = err.message;       
