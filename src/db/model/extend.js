@@ -1,5 +1,10 @@
 module.exports = (Model) => {
     /**
+     * Add method attrs
+     */
+    require('./attrs')(Model);
+
+    /**
      * Add method scopes
      */
     require('./scope')(Model);
