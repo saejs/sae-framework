@@ -1,6 +1,6 @@
 {
     "name": "sae-framework",
-    "version": "0.15.14",
+    "version": "0.15.15",
     "description": "Framework to Server Api Engine JS to make micro services",
     "main": "src/index.js",
     "scripts": {
@@ -24,7 +24,7 @@
     },
     "homepage": "https://github.com/saejs/sae-framework#readme",
     "dependencies": {
-        "rhinojs": "^1.8.0",
+        "rhinojs": "^1.8.1",
         "dotenv": "^8.2.0",
         "cors": "2.8.5",
         "express": "4.17.1",
