@@ -12,6 +12,11 @@ module.exports = (app, resource, middlewares) => {
                 obj[key] = value;
             });
 
+            // Verificar se foi implementado uma macro de controller (update)
+            if (typeof resource.controller.update == 'function') {
+                await resource.controller.update(req, res, resource, obj);
+            }
+
             await obj.save();
 
             await t.commit();

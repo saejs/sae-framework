@@ -75,6 +75,15 @@ class Resource {
     get searchAttrs() {
         return arr.get(this.opts, 'search', []);
     }
+
+    /**
+     * Retorna o controller do resource.
+     * 
+     * @returns {Object}
+     */
+    get controller() {
+        return arr.get(this.opts, 'controller', {});
+    }
 }
 
 module.exports = Resource;

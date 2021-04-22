@@ -107,6 +107,11 @@ module.exports = (app, resource, middlewares) => {
         // Aplicar paginação
         listApply_pages(query, req, resource);
 
+        // Verificar se foi implementado uma macro de controller (list)
+        if (typeof resource.controller.list == 'function') {
+            await resource.controller.list(req, res, resource, query);
+        }
+
         // Carregar registros
         var all = await resource.model.findAll(query);
 
