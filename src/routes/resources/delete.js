@@ -15,12 +15,14 @@ module.exports = (app, resource, middlewares) => {
                 var obj = await resource.__getModelById(ids[i], false);
                 if (obj !== null) {
 
-                    // Verificar se foi implementado uma macro de controller (delete)
-                    if (typeof resource.controller.delete == 'function') {
-                        await resource.controller.delete(req, res, resource, obj);
-                    }
+                    // Verificar se foi implementado uma macro de controller (before delete)
+                    await resource.macro('deleting', [req, res, resource, obj]);
 
                     await obj.destroy();
+
+                    // Verificar se foi implementado uma macro de controller (after delete)
+                    await resource.macro('deleted', [req, res, resource, obj]);
+
                     count += 1;
                 }
             }

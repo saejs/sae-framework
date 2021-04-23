@@ -12,12 +12,13 @@ module.exports = (app, resource, middlewares) => {
                 obj[key] = value;
             });
 
-            // Verificar se foi implementado uma macro de controller (store)
-            if (typeof resource.controller.store == 'function') {
-                await resource.controller.store(req, res, resource, obj);
-            }
-            
+            // Verificar se foi implementado uma macro de controller (before store)
+            await resource.macro('creating', [req, res, resource, obj]);
+
             await obj.save();
+
+            // Verificar se foi implementado uma macro de controller (after store)
+            await resource.macro('created', [req, res, resource, obj]);
 
             await t.commit();
 

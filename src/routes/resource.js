@@ -77,13 +77,24 @@ class Resource {
     }
 
     /**
-     * Retorna o controller do resource.
+     * Retorna o macro do resource.
      * 
      * @returns {Object}
      */
-    get controller() {
-        return arr.get(this.opts, 'controller', {});
+    get macro() {
+        return arr.get(this.opts, 'macro', {});
     }
+
+    /**
+     * Executar o evento do controller.
+     */
+    async macro(event, args) {
+        var evCall = resource.macro[event];
+        if (typeof evCall == 'function') {
+            await evCall.apply(null, args);
+        }
+    }
+
 }
 
 module.exports = Resource;

@@ -6,9 +6,7 @@ module.exports = (app, resource, middlewares) => {
         //..
 
         // Verificar se foi implementado uma macro de controller (edit)
-        if (typeof resource.controller.edit == 'function') {
-            await resource.controller.edit(req, res, resource, obj);
-        }
+        await resource.macro('edit', [req, res, resource, obj]);
 
         res.json(obj);
     }, middlewares);
