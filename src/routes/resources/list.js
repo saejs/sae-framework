@@ -47,7 +47,23 @@ function listApply_filter_search(query, req, resource) {
  * Aplicar filtros dos atributos.
  */
 function listApply_filter_attributes(query, req, resource) {
-    //..
+    // Aplicar filtro do parent
+    var parent = resource.option('parent');
+    var parent_attr = null;
+    if (parent) {
+        parent_attr = parent.attr;
+        var parent_id = req.query[parent_attr] ? req.query[parent_attr] : null;
+        if (!parent_id) {
+            query.where[parent_attr] = { 
+                [Op.is]: null
+            };
+        } else {
+            query.where[parent_attr] = parent_id;
+        }
+    }
+
+    // Aplicar os outros atributos mas excluir o atributo "parent"
+    //...
 }
 
 /**

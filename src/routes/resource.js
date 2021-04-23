@@ -86,6 +86,17 @@ class Resource {
     }
 
     /**
+     * Retorna um variavel do option.
+     * 
+     * @param {String} key Nome do atributo do option 
+     * @param {any} def Valor padrao
+     * @returns {any}
+     */
+    option(key, def = null) {
+        return arr.get(this.opts, key, def);
+    }
+
+    /**
      * Executar o evento do controller.
      */
     async macro(event, args) {
