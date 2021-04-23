@@ -54,9 +54,11 @@ function listApply_filter_attributes(query, req, resource) {
         parent_attr = parent.attr;
         var parent_id = req.query[parent_attr] ? req.query[parent_attr] : null;
         if (!parent_id) {
-            query.where[parent_attr] = { 
-                [Op.is]: null
-            };
+            if (!parent.showall) {
+                query.where[parent_attr] = { 
+                    [Op.is]: null
+                };
+            }
         } else {
             query.where[parent_attr] = parent_id;
         }
