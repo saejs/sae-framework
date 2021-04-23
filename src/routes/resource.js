@@ -81,7 +81,7 @@ class Resource {
      * 
      * @returns {Object}
      */
-    get macro() {
+    get macroController() {
         return arr.get(this.opts, 'macro', {});
     }
 
@@ -89,7 +89,7 @@ class Resource {
      * Executar o evento do controller.
      */
     async macro(event, args) {
-        var evCall = this.macro[event];
+        var evCall = this.macroController[event];
         if (typeof evCall == 'function') {
             await evCall.apply(null, args);
         }
