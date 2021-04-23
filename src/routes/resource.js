@@ -89,7 +89,7 @@ class Resource {
      * Executar o evento do controller.
      */
     async macro(event, args) {
-        var evCall = resource.macro[event];
+        var evCall = this.macro[event];
         if (typeof evCall == 'function') {
             await evCall.apply(null, args);
         }
