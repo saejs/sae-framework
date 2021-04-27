@@ -47,7 +47,7 @@ class Resource {
 
         if (model == null) {
             if (createException) {
-                throw ApiError('error.model.nao.encontrado', { label: this.label, id: id});
+                throw new ApiError('error.model.nao.encontrado', { label: this.label, id: id});
             }
 
             return null;
