@@ -113,7 +113,7 @@ class Resource {
      * @returns {any}
      */
     getParentId(req) {
-        var parent = resource.option('parent');
+        var parent = this.option('parent');
 
         if ((!parent) || (!parent.attr)) {
             return null;
