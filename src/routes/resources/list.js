@@ -48,19 +48,16 @@ function listApply_filter_search(query, req, resource) {
  */
 function listApply_filter_attributes(query, req, resource) {
     // Aplicar filtro do parent
-    var parent = resource.option('parent');
-    var parent_attr = null;
+    var parent = resource.getParentId(req);
     if (parent) {
-        parent_attr = parent.attr;
-        var parent_id = req.query[parent_attr] ? req.query[parent_attr] : null;
-        if (!parent_id) {
+        if (!parent.value) {
             if (!parent.showall) {
-                query.where[parent_attr] = { 
+                query.where[parent.attr] = { 
                     [Op.is]: null
                 };
             }
         } else {
-            query.where[parent_attr] = parent_id;
+            query.where[parent.attr] = parent.value;
         }
     }
 

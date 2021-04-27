@@ -106,6 +106,40 @@ class Resource {
         }
     }
 
+    /**
+     * Retorna o id do parent.
+     * 
+     * @param {Object} req Request
+     * @returns {any}
+     */
+    getParentId(req) {
+        var parent = resource.option('parent');
+
+        if ((!parent) || (!parent.attr)) {
+            return null;
+        }
+
+        var modo = parent.mode ? parent.mode : 'param';
+
+        // Query
+        if (modo == 'query') {
+            return {
+                attr    : parent.attr,
+                value   : req.query[parent.attr] ? req.query[parent.attr] : null,
+                showall : parent.showall ? true : false,
+                mode    : 'query',
+            }
+        }
+
+        // Param
+        return {
+            attr    : parent.attr,
+            value   : req.params[parent.attr] ? req.params[parent.attr] : null,
+            showall : parent.showall ? true : false,
+            mode    : 'param',
+        };
+    }
+
 }
 
 module.exports = Resource;

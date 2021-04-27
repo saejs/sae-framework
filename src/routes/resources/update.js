@@ -8,6 +8,13 @@ module.exports = (app, resource, middlewares) => {
 
             var obj = await resource.__getModelById(req.params.id);
 
+            // Aplicar parent
+            var parent = resource.getParentId(req);
+            if ((parent) && (parent.value)) {
+                obj[parent.attr] = parent.value;
+            }
+
+            // Aplicar atributos
             arr.each(json, (key, value) => {
                 obj[key] = value;
             });
