@@ -22,7 +22,10 @@ class Events
             var eventCall = this.list[eventId][i];
 
             // Executar evento sync
-            await eventCall.apply(null, payload);
+            var ret = await eventCall.apply(null, payload);
+            if (!((ret == undefined) || (ret == null))) {
+                return ret;
+            }
         }
 
         return true;
