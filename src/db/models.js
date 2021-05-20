@@ -9,10 +9,16 @@ module.exports = (app) => {
         const path = require('path');
         const defineModel = require('./model');
 
+        // Verificar se pathModels foi informado
         if (!pathModels) {
             const { getSequelizeConfig } = require('./helpers');
             const config = getSequelizeConfig(false);
             pathModels = config['models-path'];
+        }
+
+        // Verificar se pathModels é um array
+        if ((typeof pathModels == 'object') && (pathModels.constructor.name != 'Array')) {
+            pathModels = [pathModels];
         }
 
         //----------------------------------------------------------------------------------------
@@ -27,25 +33,28 @@ module.exports = (app) => {
         //----------------------------------------------------------------------------------------
         const models = {};
 
-        fs.readdirSync(pathModels)
-            .filter(file => {
-                return (file.indexOf('.') !== 0) && (file !== 'index.js') && (file.slice(-3) === '.js');
-            })
-
-            .forEach(file => {
-                const model = require(path.join(pathModels, file))(db.sequelize, db.DataTypes);
-
-                // Atribuir app no objeto model
-                model.prototype.$app = app;
-                model.app = app;
-
-                // Atribuir db no objeto model
-                model.prototype.$db = db;
-                model.db = db;
-
-                models[model.name] = model;
-            });
-
+        for (let i = 0; i < pathModels.length; i++) {
+            const pathModelItem = pathModels[i];
+            
+            fs.readdirSync(pathModelItem)
+                .filter(file => {
+                    return (file.indexOf('.') !== 0) && (file !== 'index.js') && (file.slice(-3) === '.js');
+                })
+    
+                .forEach(file => {
+                    const model = require(path.join(pathModelItem, file))(db.sequelize, db.DataTypes);
+    
+                    // Atribuir app no objeto model
+                    model.prototype.$app = app;
+                    model.app = app;
+    
+                    // Atribuir db no objeto model
+                    model.prototype.$db = db;
+                    model.db = db;
+    
+                    models[model.name] = model;
+                });
+        }
 
         // Execute "associate" method
         Object.keys(models).forEach(modelName => {
