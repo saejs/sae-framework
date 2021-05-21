@@ -35,6 +35,9 @@ const getAuthRequest = (req) => {
 module.exports = {
     prepare: () => {
         return async (req, res, next) => {
+            // Registrar no REQ alias do auth
+            req.auth = auth;
+
             // Verificar se token foi informado no contexto
             var token = getAuthRequest(req);
             if (token) {
