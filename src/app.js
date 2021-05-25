@@ -7,7 +7,7 @@ const middlewareResJson = require('./middlewares/res_json');
 const middlewareResError = require('./middlewares/res_error');
 const middlewareReqGetClientIp = require('./middlewares/req_getclientip');
 const middlewareReqValidate = require('./middlewares/req_validate');
-const middlewareReqJson = require('./middlewares/req_json');
+const middlewareReqGets = require('./middlewares/req_gets');
 const middlewareAuth = require('./middlewares/auth');
 
 // rotas
@@ -54,7 +54,7 @@ class App {
         this.$route.use(middlewareResError());
         this.$route.use(middlewareResJson());
         this.$route.use(middlewareReqGetClientIp());
-        this.$route.use(middlewareReqJson());
+        this.$route.use(middlewareReqGets());
         this.$route.use(middlewareReqValidate());
 
         // Event para registrar middlewares
