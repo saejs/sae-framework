@@ -17,7 +17,7 @@ module.exports = (app) => {
         }
 
         // Verificar se pathModels é um array
-        if ((typeof pathModels == 'object') && (pathModels.constructor.name != 'Array')) {
+        if ((typeof pathModels != 'object') || ((typeof pathModels == 'object') && (pathModels.constructor.name != 'Array'))) {
             pathModels = [pathModels];
         }
 

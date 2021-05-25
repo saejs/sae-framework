@@ -14,7 +14,7 @@ const getAuthHeader = (req) => {
 };
 
 const getAuthQuery = (req) => {
-    return req.query['access_token'] ? req.query['access_token'] : null;
+    return req.query('access_token');
 };
 
 const getAuthRequest = (req) => {
