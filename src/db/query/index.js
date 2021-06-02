@@ -47,14 +47,15 @@ class Query
         var subquery = new Query(this._model);
 
         // Executar callback
-        callback.apply(null, subquery);
+        callback.apply(null, [subquery]);
 
         // Verificar se where foi definido
         if (!this._query.where) {
-            this._query.where = {};
+            this._query.where = [];
         }
 
-        this._query.where[Op.and] = subquery._query.where;
+        //this._query.where[Op.and] = subquery._query.where;
+        this._query.where.push({ [Op.and]: subquery._query.where });
 
         return this;
     }
@@ -69,14 +70,14 @@ class Query
         var subquery = new Query(this._model);
 
         // Executar callback
-        callback.apply(null, subquery);
+        callback.apply(null, [subquery]);
 
         // Verificar se where foi definido
         if (!this._query.where) {
-            this._query.where = {};
+            this._query.where = [];
         }
 
-        this._query.where[Op.or] = subquery._query.where;
+        this._query.where.push({ [Op.or]: subquery._query.where });
 
         return this;
     }
@@ -93,7 +94,7 @@ class Query
 
         // Verificar se where foi definido
         if (!this._query.where) {
-            this._query.where = {};
+            this._query.where = [];
         }
 
         // Verificar se eh um callback
@@ -107,87 +108,88 @@ class Query
             op = '=';
         }
 
+        var item = {};
         switch (op) {
             case '=':
-                this._query.where[attr] = {
+                item[attr] = {
                     [Op.eq]: value,
                 }
                 break;
 
             case '<>':
-                this._query.where[attr] = {
+                item[attr] = {
                     [Op.ne]: value,
                 }
                 break;
 
             case '>':
-                this._query.where[attr] = {
+                item[attr] = {
                     [Op.gt]: value,
                 }
                 break;
 
             case '>=':
-                this._query.where[attr] = {
+                item[attr] = {
                     [Op.gte]: value,
                 }
                 break;
 
             case '<':
-                this._query.where[attr] = {
+                item[attr] = {
                     [Op.lt]: value,
                 }
                 break;
 
             case '<=':
-                this._query.where[attr] = {
+                item[attr] = {
                     [Op.lte]: value,
                 }
                 break;
 
             case 'like':
-                this._query.where[attr] = {
+                item[attr] = {
                     [Op.like]: value,
                 }
                 break;
 
             case 'notlike':
-                this._query.where[attr] = {
+                item[attr] = {
                     [Op.notLike]: value,
                 }
                 break;
 
             case 'between':
-                this._query.where[attr] = {
+                item[attr] = {
                     [Op.between]: value,
                 }
                 break;
 
             case 'notbetween':
-                this._query.where[attr] = {
+                item[attr] = {
                     [Op.notBetween]: value,
                 }
                 break;
 
             case 'isnull':
-                this._query.where[attr] = {
+                item[attr] = {
                     [Op.is]: null,
                 }
                 break;
 
             case 'isnotnull':
-                this._query.where[attr] = {
+                item[attr] = {
                     [Op.not]: null,
                 }
                 break;
 
             case 'in':
-                this._query.where[attr] = {
+                item[attr] = {
                     [Op.in]: value,
                 }
                 break;
 
             case 'notin':
-                this._query.where[attr] = {
+                item[attr] = {
                     [Op.notIn]: value,
                 }
                 break;
@@ -195,6 +197,8 @@ class Query
             default:
                 throw new ApiError('erro.query.op.nao.implementado', { op });
         }
+
+        this._query.where.push(item);
 
         return this;
     }
