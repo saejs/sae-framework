@@ -46,6 +46,12 @@ const query = async (sql, opts = {}) => {
     return await sequelize.query(sql, opts);
 }
 
+const queryFirst = async (sql, opts = {}) => {
+    opts = Object.assign({ plain: true }, opts);
+    
+    return await query(sql, opts);
+}
+
 
 module.exports = {
     db        : sequelize,
@@ -55,4 +61,5 @@ module.exports = {
     config,
     transaction,
     query,
+    first: queryFirst,
 };

@@ -6,4 +6,12 @@ module.exports = (Model) => {
         Model.db.transaction.apply(options);
         Model.setWhereContext(Model, options);
     });
+
+    /**
+     * Adicionar o evento de controle do count.
+     */
+    Model.addHook('beforeCount', (options) => {
+        Model.db.transaction.apply(options);
+        Model.setWhereContext(Model, options);
+    });
 }
