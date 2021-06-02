@@ -38,6 +38,34 @@ class Query
     }
 
     /**
+     * Atualizar registro pela seleção.
+     * 
+     * @returns {Object}
+     */
+    async update(attrs) {
+        var opts = {};
+        if (this._query.where) {
+            opts.where = this._query.where;
+        }
+
+        return await this._model.update(attrs, opts);
+    }
+
+    /**
+     * Excluir regitros pela seleção.
+     * 
+     * @returns {Object}
+     */
+    async destroy() {
+        var opts = {};
+        if (this._query.where) {
+            opts.where = this._query.where;
+        }
+
+        return await this._model.destroy(opts);
+    }
+
+    /**
      * Adicionar uma subquery AND.
      * 
      * @param {Function} callback Callback do subquery
@@ -92,14 +120,14 @@ class Query
      */
     where(attr, op, value = null) {
 
-        // Verificar se where foi definido
-        if (!this._query.where) {
-            this._query.where = [];
-        }
-
         // Verificar se eh um callback
         if (typeof attr == 'function') {
             return this.and(attr);
+        }
+        
+        // Verificar se where foi definido
+        if (!this._query.where) {
+            this._query.where = [];
         }
 
         // Tratar entrada de parametros
