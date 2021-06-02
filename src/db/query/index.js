@@ -66,6 +66,65 @@ class Query
     }
 
     /**
+     * Count dos registros.
+     * 
+     * @returns {Integer}
+     */
+    async count() {
+        var opts = {};
+        if (this._query.where) {
+            opts.where = this._query.where;
+        }
+
+        return await this._model.count(opts);
+    }
+
+    /**
+     * Valor maximo de um campo.
+     * 
+     * @param {String} attr Nome do campo
+     * @returns {Number|Integer}
+     */
+    async max(attr) {
+        var opts = {};
+        if (this._query.where) {
+            opts.where = this._query.where;
+        }
+
+        return await this._model.max(attr, opts);
+    }
+
+    /**
+     * Valor minimo de um campo.
+     * 
+     * @param {String} attr Nome do campo
+     * @returns {Number|Integer}
+     */
+     async min(attr) {
+        var opts = {};
+        if (this._query.where) {
+            opts.where = this._query.where;
+        }
+
+        return await this._model.min(attr, opts);
+    }
+
+    /**
+     * Soma de um campo
+     * 
+     * @param {String} attr Nome do campo
+     * @returns {Number|Integer}
+     */
+     async sum(attr) {
+        var opts = {};
+        if (this._query.where) {
+            opts.where = this._query.where;
+        }
+
+        return await this._model.sum(attr, opts);
+    }
+
+    /**
      * Adicionar uma subquery AND.
      * 
      * @param {Function} callback Callback do subquery
