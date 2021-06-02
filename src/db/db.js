@@ -25,11 +25,34 @@ if (config.use_env_variable) {
     sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
+//----------------------------------------------------------------------------------------
+// Controle de transacoes
+//----------------------------------------------------------------------------------------
+const transaction = new Transaction(sequelize);
+
+//----------------------------------------------------------------------------------------
+// Query RAW
+//----------------------------------------------------------------------------------------
+const query = async (sql, opts = {}) => {
+    // Tratar opções padrao
+    opts = Object.assign({
+        type: Sequelize.QueryTypes.SELECT,
+    }, opts);
+
+    // Aplicar transacoes
+    transaction.apply(opts);
+
+    // Executar Query
+    return await sequelize.query(sql, opts);
+}
+
+
 module.exports = {
     db        : sequelize,
     DataTypes : Sequelize.DataTypes,
     sequelize,
     Sequelize,
     config,
-    transaction: new Transaction(sequelize),
+    transaction,
+    query,
 };
