@@ -33,4 +33,9 @@ module.exports = (Model) => {
      * Extender method model "toJson"
      */
     require('./to_json')(Model);
+
+    /**
+     * Extender method model "query"
+     */
+    require('./query')(Model);
 };
