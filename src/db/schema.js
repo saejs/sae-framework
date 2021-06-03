@@ -126,7 +126,7 @@ module.exports = {
             type: Sequelize.DATE,
             allowNull: true,
             set(value, name) {
-                muttations.date.set(this, name, value, 'yyyy-MM-dd hh:mm:ss');
+                muttations.date.set(this, name, value, 'YYYY-MM-DD HH:mm:ss');
             }
         };
 
@@ -150,7 +150,7 @@ module.exports = {
             type: Sequelize.DATEONLY,
             allowNull: true,
             set(value, name) {
-                muttations.date.set(this, name, value, 'yyyy-MM-dd');
+                muttations.date.set(this, name, value, 'YYYY-MM-DD');
             }
         };
 
