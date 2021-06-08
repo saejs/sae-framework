@@ -1,4 +1,4 @@
-const { Op } = require("sequelize");
+const { Op, Sequelize } = require("sequelize");
 const ApiError = require('../../api_error');
 
 class Query
@@ -281,6 +281,10 @@ class Query
                 }
                 break;
 
+            case 'raw':
+                item[Op.and] = Sequelize.literal(attr);
+                break;
+
             default:
                 throw new ApiError('erro.query.op.nao.implementado', { op });
         }
@@ -333,6 +337,16 @@ class Query
     }
 
     /**
+     * Alias raw.
+     * 
+     * @param {string} whereSQL 
+     * @returns {Query}
+     */
+    whereRaw(whereSQL) {
+        return this.where(whereSQL, 'raw', false);
+    }
+
+    /**
      * Adicionar um order by.
      * 
      * @param {string} attr Nome do atributo
@@ -345,6 +359,22 @@ class Query
         }
 
         this._query.order.push([ attr, dir.toUpperCase() ]);
+
+        return this;
+    }
+
+    /**
+     * Adicionar um order by RAW.
+     * 
+     * @param {string} orderSQL 
+     * @returns {Query}
+     */
+    orderByRaw(orderSQL) {
+        if (!this._query.order) {
+            this._query.order = [];
+        }
+
+        this._query.order.push(Sequelize.literal(orderSQL));
 
         return this;
     }
