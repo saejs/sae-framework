@@ -5,7 +5,7 @@ module.exports = (app, resource, middlewares) => {
             // Carregar lista de ids
             var ids = req.params.id;
             if (ids == null) {
-                ids = req.query.ids;
+                ids = req.query('ids');
             }
             ids = (typeof ids == 'string') ? ids.split(',') : [];
 

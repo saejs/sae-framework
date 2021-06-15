@@ -125,7 +125,7 @@ class Resource {
         if (modo == 'query') {
             return {
                 attr    : parent.attr,
-                value   : req.query[parent.attr] ? req.query[parent.attr] : null,
+                value   : req.query(parent.attr, null),
                 showall : parent.showall ? true : false,
                 mode    : 'query',
             }

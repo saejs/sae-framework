@@ -18,11 +18,11 @@ function listApply_filter(query, req, resource) {
  * Aplicar filtros da busca.
  */
 function listApply_filter_search(query, req, resource) {
-    if (!req.query.q) {
+    if (!req.query('q')) {
         return;
     }
 
-    var q = req.query.q;
+    var q = req.query('q');
     var attrs = resource.searchAttrs;
     if (attrs.length == 0) {
         return;
@@ -70,7 +70,7 @@ function listApply_filter_attributes(query, req, resource) {
  * ?sort=campo.asc,campo1.desc,campo2 - quando nao informado .asc|desc assumir asc
  */
 function listApply_orders(query, req, resource) {
-    if (!req.query.sort) {
+    if (!req.query('sort')) {
         return;
     }
 
@@ -78,7 +78,7 @@ function listApply_orders(query, req, resource) {
 
     var exp = /^([A-Za-z0-9_]+)(\.(asc|desc){1})*$/;
 
-    var sorts = req.query.sort.split(',');
+    var sorts = req.query('sort', '').split(',');
     for (var i in sorts) {
         var match = exp.exec(sorts[i]);
         if (match) {
@@ -97,13 +97,13 @@ function listApply_orders(query, req, resource) {
  */
 function listApply_pages(query, req, resource) {
     // Limit
-    if (req.query.limit) {
-        query.limit = req.query.limit;
+    if (req.query('limit')) {
+        query.limit = req.query('limit');
     }
 
     // Offset
-    if (req.query.offset) {
-        query.offset = req.query.offset;
+    if (req.query('offset')) {
+        query.offset = req.query('offset');
     }
 }
 
