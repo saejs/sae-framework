@@ -97,10 +97,10 @@ function listApply_orders(query, req, resource) {
  */
 function listApply_pages(query, req, resource) {
     // Limit
-    query.limit = req.query('limit', 50);
+    query.limit = Number(req.query('limit', 50));
 
     // Offset
-    query.offset = req.query('offset', 0);
+    query.offset = Number(req.query('offset', 0));
 }
 
 module.exports = (app, resource, middlewares) => {
@@ -108,9 +108,11 @@ module.exports = (app, resource, middlewares) => {
 
         // Gerar nova query
         var query = {};
+        var queryCount = {};
 
         // Aplicar filtros
         listApply_filter(query, req, resource);
+        listApply_filter(queryCount, req, resource);
 
         // Aplicar ordenação
         listApply_orders(query, req, resource);
@@ -120,11 +122,18 @@ module.exports = (app, resource, middlewares) => {
 
         // Verificar se foi implementado uma macro de controller (list)
         await resource.macro('list', [req, res, resource, query]);
+        await resource.macro('list', [req, res, resource, queryCount]);
+
+        // Carregar qtdade de registros total sem paginacao
+        var count = await resource.model.count(queryCount);
 
         // Carregar registros
-        var all = await resource.model.findAll(query);
+        var lista = await resource.model.findAll(query);
 
         // Retorno
-        res.json(all);
+        res.json({
+            count,
+            lista,
+        });
     }, middlewares);
 }
