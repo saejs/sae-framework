@@ -108,10 +108,10 @@ function listApply_pages(query, req, resource) {
  * ?includes=
  */
  function listApply_includes(query, req) {
-    query.includes = req.query('includes', []);
+    query.include = req.query('includes', []);
 
-    if (typeof query.includes == 'string') {
-         query.include = query.includes.split(',');
+    if (typeof query.include == 'string') {
+         query.include = query.include.split(',');
     }
 }
 

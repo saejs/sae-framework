@@ -38,12 +38,13 @@ class Resource {
     /**
      * Load model by Id.
      * 
-     * @param {String} id Od of model
+     * @param {String} id Id of model
+     * @param {Object} opts Opcoes da busca
      * @param {Boolean} createException Has create exception
      * @returns {Object}
      */
-    async __getModelById(id, createException = true) {
-        var model = await this.model.findByPk(id);
+    async __getModelById(id, opts = {}, createException = true) {
+        var model = await this.model.findByPk(id, opts);
 
         if (model == null) {
             if (createException) {

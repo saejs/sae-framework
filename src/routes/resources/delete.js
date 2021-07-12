@@ -12,7 +12,7 @@ module.exports = (app, resource, middlewares) => {
             var count = 0;
 
             for (var i in ids) {
-                var obj = await resource.__getModelById(ids[i], false);
+                var obj = await resource.__getModelById(ids[i], {}, false);
                 if (obj !== null) {
 
                     // Verificar se foi implementado uma macro de controller (before delete)

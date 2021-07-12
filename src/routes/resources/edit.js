@@ -1,6 +1,15 @@
 module.exports = (app, resource, middlewares) => {
     app.get(resource.uri + '/:id/edit', async (req, res) => {
-        var obj = await resource.__getModelById(req.params.id);
+        var opts = {};
+
+        // Tratar includes
+        opts.include = req.query('includes', []);
+        if (typeof opts.include == 'string') {
+            opts.include = opts.include.split(',');
+        }
+
+        // Carregar registro
+        var obj = await resource.__getModelById(req.params.id, opts);
 
         // Aplicar valores default quando entra em modo edição
         //..
