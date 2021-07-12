@@ -1,6 +1,6 @@
 {
     "name": "sae-framework",
-    "version": "0.18.6",
+    "version": "0.18.7",
     "description": "Framework to Server Api Engine JS to make micro services",
     "main": "src/index.js",
     "scripts": {

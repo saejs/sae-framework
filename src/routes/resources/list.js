@@ -97,14 +97,10 @@ function listApply_orders(query, req, resource) {
  */
 function listApply_pages(query, req, resource) {
     // Limit
-    if (req.query('limit')) {
-        query.limit = req.query('limit');
-    }
+    query.limit = req.query('limit', 50);
 
     // Offset
-    if (req.query('offset')) {
-        query.offset = req.query('offset');
-    }
+    query.offset = req.query('offset', 0);
 }
 
 module.exports = (app, resource, middlewares) => {
