@@ -58,6 +58,26 @@ class Resource {
     }
 
     /**
+     * Aplicar include no queru pelo req.query.
+     * 
+     * @param {Object} query 
+     * @param Object} req 
+     * @returns 
+     */
+    __queryIncludes(query, req) {
+        var incs = req.query('includes');
+        if (!incs) {
+            return;
+        }
+
+        if (typeof incs == 'string') {
+             incs = incs.split(',');
+        }    
+
+        query.include = incs;
+    }
+
+    /**
      * Iniciar uma transacao no banco.
      * 
      * @returns {Object}

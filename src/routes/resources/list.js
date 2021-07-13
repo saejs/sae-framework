@@ -103,18 +103,6 @@ function listApply_pages(query, req, resource) {
     query.offset = Number(req.query('offset', 0));
 }
 
-/**
- * Aplicar includes.
- * ?includes=
- */
- function listApply_includes(query, req) {
-    query.include = req.query('includes', []);
-
-    if (typeof query.include == 'string') {
-         query.include = query.include.split(',');
-    }
-}
-
 module.exports = (app, resource, middlewares) => {
     app.get(resource.uri, async (req, res) => {
 
@@ -133,7 +121,7 @@ module.exports = (app, resource, middlewares) => {
         listApply_pages(query, req, resource);
 
         // Aplicar includes
-        listApply_includes(query, req);
+        resource.__queryIncludes(query, req);
 
         // Verificar se foi implementado uma macro de controller (list)
         await resource.macro('list', [req, res, resource, query]);

@@ -3,10 +3,7 @@ module.exports = (app, resource, middlewares) => {
         var opts = {};
 
         // Tratar includes
-        opts.include = req.query('includes', []);
-        if (typeof opts.include == 'string') {
-            opts.include = opts.include.split(',');
-        }
+        resource.__queryIncludes(opts, req);
 
         // Carregar registro
         var obj = await resource.__getModelById(req.params.id, opts);
