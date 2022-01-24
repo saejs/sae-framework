@@ -3,6 +3,10 @@ const validator = require('sequelize/lib/utils/validator-extras').validator;
 
 module.exports = (Model) => {
     Model.prototype.validate = async function (options) {
+
+        // Executar o herdar antes
+        await this.herdar();
+
         var iv = new InstanceValidator(this, options);
 
         // Customizar validação

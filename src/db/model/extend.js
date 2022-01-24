@@ -38,6 +38,11 @@ module.exports = (Model) => {
      * Extender method model "query"
      */
     require('./query')(Model);
+
+    /**
+     * Extender method model "herdar"
+     */
+     require('./herdar')(Model);
     
     /**
      * Extender method model "validate"
