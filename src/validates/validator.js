@@ -1,4 +1,4 @@
-const ApiError = require('./api_error');
+const ApiError = require('../api_error');
 const validatorRules = require('./rules');
 
 const _validatorArgs = (ruleOpts, attrName, errors, data) => {
