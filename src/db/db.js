@@ -3,7 +3,7 @@
 const Sequelize = require('sequelize');
 const { getSequelizeConfig } = require('./helpers');
 const registerDataTypesCustom = require('./datatypes');
-const registerValidatesCustom = require('./datatypes');
+const registerValidatesCustom = require('./validates');
 const Transaction = require('./transaction');
 const config = getSequelizeConfig(true);
 
