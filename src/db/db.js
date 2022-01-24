@@ -3,12 +3,18 @@
 const Sequelize = require('sequelize');
 const { getSequelizeConfig } = require('./helpers');
 const registerDataTypesCustom = require('./datatypes');
+const registerValidatesCustom = require('./datatypes');
 const Transaction = require('./transaction');
 const config = getSequelizeConfig(true);
 
 if (!config) {
     throw "Config database not found";
 }
+
+//----------------------------------------------------------------------------------------
+// Custom validates.
+//----------------------------------------------------------------------------------------
+registerValidatesCustom(Sequelize);
 
 //----------------------------------------------------------------------------------------
 // Custom datatypes.

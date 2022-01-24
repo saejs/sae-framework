@@ -1,4 +1,4 @@
-const Validator = require('../validator');
+const Validator = require('../validates/validator');
 
 module.exports = () => {
     return (req, res, next) => {

@@ -13,7 +13,7 @@ module.exports = (Model) => {
 
         // configs
         tenant_attr: 'inquilino_id',
-        user_attr  : 'user_id',
+        user_attr  : 'usuario_id',
     };
 
     /**

@@ -38,4 +38,9 @@ module.exports = (Model) => {
      * Extender method model "query"
      */
     require('./query')(Model);
+    
+    /**
+     * Extender method model "validate"
+     */
+    require('./validate')(Model);
 };
