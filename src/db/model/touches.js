@@ -15,10 +15,17 @@ module.exports = (Model) => {
         }
 
         // Executar o touch
-        if (typeof est.touch == 'function') {
-            await est.touch();
-        }
+        await est.executeTouch({ inSave: false });
     };
+
+
+    Model.prototype.executeTouch = async function (options) {
+
+        // Executar o touch
+        if (typeof this.touch == 'function') {
+            await this.touch(options);
+        }
+    }
 
 
     Model.prototype.touchAttributes = async function (options) {

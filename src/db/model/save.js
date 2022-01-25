@@ -8,6 +8,9 @@ module.exports = (Model) => {
         // Aplicar atributos de contexto
         this.setAttributesContext(this);
 
+        // Executue touches do model
+        await this.executeTouch({ inSave: true });
+
         // Executar o save original
         var ret = await this.__save(options);
 
