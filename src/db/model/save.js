@@ -12,7 +12,7 @@ module.exports = (Model) => {
         var ret = await this.__save(options);
 
         // Executar os touches
-        await this.touchAttributes();
+        await this.touchAttributes(options);
 
         return ret;
     }

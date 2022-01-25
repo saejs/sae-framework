@@ -21,7 +21,13 @@ module.exports = (Model) => {
     };
 
 
-    Model.prototype.touchAttributes = async function () {
+    Model.prototype.touchAttributes = async function (options) {
+
+        // Verificar se deve ignorar os touches
+        if (options.touches === false) {
+            return;
+        }
+
         // Carregar atributos
         var attrs = this.constructor.rawAttributes;
         var ids = Object.keys(attrs);
