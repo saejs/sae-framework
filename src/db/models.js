@@ -56,17 +56,16 @@ module.exports = (app) => {
                 });
         }
 
-        // Execute "associate" method
+        // Execute "associate" and "prepare" method
         Object.keys(models).forEach(modelName => {
+            // Prepare
+            if (models[modelName].prepare) {
+                models[modelName].prepare(models);
+            }
+
+            // Associate
             if (models[modelName].associate) {
                 models[modelName].associate(models);
-            }
-        });
-
-        // Execute "prepare" method
-        Object.keys(models).forEach(modelName => {
-            if (models[modelName].init) {
-                models[modelName].init(models);
             }
         });
 
