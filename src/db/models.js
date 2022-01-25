@@ -63,6 +63,13 @@ module.exports = (app) => {
             }
         });
 
+        // Execute "prepare" method
+        Object.keys(models).forEach(modelName => {
+            if (models[modelName].init) {
+                models[modelName].init(models);
+            }
+        });
+
         // Registrar DB na lista de models.
         Object.assign(models, { db });
 
