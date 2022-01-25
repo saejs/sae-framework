@@ -43,6 +43,11 @@ module.exports = (Model) => {
      * Extender method model "herdar"
      */
      require('./herdar')(Model);
+
+    /**
+     * Extender method model "touch"
+     */
+     require('./touches')(Model);
     
     /**
      * Extender method model "validate"

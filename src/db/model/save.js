@@ -9,6 +9,11 @@ module.exports = (Model) => {
         this.setAttributesContext(this);
 
         // Executar o save original
-        return await this.__save(options);
+        var ret = await this.__save(options);
+
+        // Executar os touches
+        await this.touchAttributes();
+
+        return ret;
     }
 }

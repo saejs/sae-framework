@@ -2,24 +2,11 @@ const str = require('rhinojs/support/str');
 
 module.exports = (Model) => {
 
-    const __herdarAttribute = async (model, attrId, attr) => {
-
-        if (typeof attr.herdar == 'string') {
-            var attrLocal   = attr.herdar;
-            var attrDestino = attrId;    
-        } else {
-            var attrLocal   = attr.herdar.local;
-            var attrDestino = attr.herdar.destino ? attr.herdar.destino : attrId;
-        }
-
-
-        // Verificar se os atributos foram informados
-        if ((!attrLocal) || (!attrDestino)) {
-            return null;
-        }
+    const __touchAttribute = async (model, attrId, attr) => {
 
         // Montar method get
-        var method = 'get' + str.studly(attrLocal);
+        attrId = str.replaceAll('_id', '', attrId);
+        var method = 'get' + str.studly(attrId);
 
         // Carregar model estrangeiro 
         var est = await model[method]();
@@ -27,11 +14,14 @@ module.exports = (Model) => {
             return null;
         }
 
-        return est[attrDestino];
+        // Executar o touch
+        if (typeof est.touch == 'function') {
+            await est.touch();
+        }
     };
 
 
-    Model.prototype.touch = async function () {
+    Model.prototype.touchAttributes = async function () {
         // Carregar atributos
         var attrs = this.constructor.rawAttributes;
         var ids = Object.keys(attrs);
@@ -39,11 +29,11 @@ module.exports = (Model) => {
             var id = ids[i];
             var attr = attrs[id];
 
-            if (!attr.herdar) {
+            if (!attr.touch) {
                 continue;
             }
 
-            this[id] = await __herdarAttribute(this, id, attr);
+            await __touchAttribute(this, id, attr);
         }
     }
 }
