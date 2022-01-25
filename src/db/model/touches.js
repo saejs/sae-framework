@@ -24,6 +24,11 @@ module.exports = (Model) => {
         // Executar o touch
         if (typeof this.touch == 'function') {
             await this.touch(options);
+
+            // Veriifcar se deve dar o save
+            if (!options.inSave) {
+                await this.save();
+            }
         }
     }
 
