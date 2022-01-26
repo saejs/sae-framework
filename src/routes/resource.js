@@ -111,9 +111,9 @@ class Resource {
             return;
         }
 
-        var keys = Object.keys(resource.modelWhere);
+        var keys = Object.keys(this.modelWhere);
         for (var id of keys) {
-            where[id] = resource.modelWhere[id];
+            where[id] = this.modelWhere[id];
         }        
     }
 
