@@ -62,7 +62,7 @@ module.exports = (Model) => {
                 }
 
                 // If value is null, built-in validators should not run (only custom validators have to run) (see #9134).
-                if ((value === null || value === undefined) && (myRules.indexOf(field) == -1)) {
+                if ((value === null || value === undefined) && (myRules.indexOf(validatorType) == -1)) {
                     return;
                 }
 
