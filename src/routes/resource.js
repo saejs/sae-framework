@@ -98,6 +98,15 @@ class Resource {
     }
 
     /**
+     * Retorna o where para o model.
+     * 
+     * @returns {Object|null}
+     */
+    get modelWhere() {
+        return arr.get(this.opts, 'where', null);
+    }
+
+    /**
      * Retorna o macro do resource.
      * 
      * @returns {Object}
