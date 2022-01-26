@@ -9,7 +9,9 @@ module.exports = (Model) => {
         this.setAttributesContext(this);
 
         // Executue touches do model
-        await this.executeTouch({ inSave: true });
+        if (options.noSelfTouches !== false) {
+            await this.executeTouch({ inSave: true });
+        }
 
         // Executar o save original
         var ret = await this.__save(options);

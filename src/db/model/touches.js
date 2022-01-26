@@ -27,7 +27,7 @@ module.exports = (Model) => {
 
             // Veriifcar se deve dar o save
             if (!options.inSave) {
-                await this.save();
+                await this.save({ noSelfTouches: false });
             }
         }
     }
