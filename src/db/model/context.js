@@ -46,7 +46,7 @@ module.exports = (Model) => {
      * Informar attributo por usuario.
      */
     Model.prototype.__setAttributesUser = (model) => {
-        // Verificar se é por usuario
+        // Verificar se model é por usuario
         if (!model.constructor.context.byUser) {
             return false;            
         }
@@ -68,6 +68,54 @@ module.exports = (Model) => {
         return true;
     }
 
+    /**
+     * Assumir attributo usuario do contexto.
+     */
+    Model.prototype.__setAttributesAssumirContextoUsuario = (attrName, model) => {
+        // Verificar se atributo já foi informado
+        if (model[attrName]) {
+            return false;
+        }
+
+        // Verificar se usuário esta logado
+        var user = auth.user();
+        if (!user) {
+            throw new ApiError('erro.auth.sem.contexto');
+        }
+
+        // Atribuir attributo do model pelo usuario logado do usuario.
+        model[attrName] = user.id;
+
+        return true;
+    }
+
+    /**
+     * Assumir atributos de contexto.
+     */
+    Model.prototype.__setAttributesAssumirContexto = (model) => {
+        // Carregar atributos
+        var attrs = model.constructor.rawAttributes;
+        var ids = Object.keys(attrs);
+        for (var i = 0; i < ids.length; i++) {
+            var id = ids[i];
+            var attr = attrs[id];
+
+            if (!attr.context) {
+                continue;
+            }
+
+            // Verificar se deve assumir usuario logado
+            if (attr.context.user) {
+                model.__setAttributesAssumirContextoUsuario(id, model);
+            }
+
+            // Verificar se deve empresa logado
+            if (attr.context.company) {
+                //.. assumir empresa...
+            }
+        }
+    }
+
 
     /**
      * Atribuir controle de contexto.
@@ -78,6 +126,9 @@ module.exports = (Model) => {
 
         // Verificar se é por usuário
         model.__setAttributesUser(model);
+
+        // Assumir contexto 
+        model.__setAttributesAssumirContexto(model);
     }
 
     /**
