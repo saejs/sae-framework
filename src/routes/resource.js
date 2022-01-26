@@ -118,6 +118,22 @@ class Resource {
     }
 
     /**
+     * Aplicar defults attributes da rota.
+     * 
+     * @param {Object} where 
+     */
+    __applyDefaultAttributesRoute(model) {
+        if (!this.modelDefaults) {
+            return;
+        }
+
+        var keys = Object.keys(this.modelDefaults);
+        for (var attr of keys) {
+            model[attr] = this.modelDefaults[attr];
+        }        
+    }
+
+    /**
      * Retorna a lista de atributos para a busca.
      * 
      * @returns {Array}
@@ -133,6 +149,15 @@ class Resource {
      */
     get modelWhere() {
         return arr.get(this.opts, 'where', null);
+    }
+
+    /**
+     * Retorna o defaults attributes para o model da rota.
+     * 
+     * @returns {Object|null}
+     */
+    get modelDefaults() {
+        return arr.get(this.opts, 'defaults', null);
     }
 
     /**

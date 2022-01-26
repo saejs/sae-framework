@@ -8,6 +8,9 @@ module.exports = (app, resource, middlewares) => {
 
             var obj = new resource.model();
 
+            // Aplicar defaults da rota
+            resource.__applyDefaultAttributesRoute(obj);
+
             // Aplicar parent
             var parent = resource.getParentId(req);
             if ((parent) && (parent.value)) {
