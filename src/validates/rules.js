@@ -1,4 +1,5 @@
 const validator = require('validator');
+const _validar = require('./validar');
 
 /**
  * Regras
@@ -16,18 +17,18 @@ validatorRules.json           = (str, opts) => { return validator.isJSON(str, op
 validatorRules.url            = (str, opts) => { return validator.isURL(str, opts); };
 validatorRules.len            = (str, opts) => { return validator.isLength(str, opts); };
 validatorRules.subitens       = async (str, opts, attrName, errors) => { 
-    await _validar(str, opts, errors, attrName + '.');
+    await _validar(str, opts, errors, validatorRules, attrName + '.');
     
     return true;
 };
 
-validatorRules.obrigatorio_se = async (str, opts, attrName, errors, data) => { 
+validatorRules.obrigatorio_se = (str, opts, attrName, errors, data) => { 
     var condAttr = opts.attr;
     var condVal  = opts.val;
 
     var val = data[condAttr];
     if (val == condVal) {
-        return !validator.isEmpty(str);
+        return (!(validator.isEmpty(str) || (str == 'undefined')));
     }
     
     return true;
