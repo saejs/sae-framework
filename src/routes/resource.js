@@ -44,8 +44,21 @@ class Resource {
      * @returns {Object}
      */
     async __getModelById(id, opts = {}, createException = true) {
-        var model = await this.model.findByPk(id, opts);
+        // Tratar where
+        if (!opts.where) {
+            opts.where = {};
+        }
 
+        // Set ID filter
+        opts.where['id'] = id;
+
+        // Set route filters
+        this.__applyWhereRoute(opts.where);
+
+        // Procurar registro
+        var model = await this.model.findOne(opts);
+
+        // Verificar sew entrou um registro
         if (model == null) {
             if (createException) {
                 throw new ApiError('error.model.nao.encontrado', { label: this.label, id: id});
@@ -86,6 +99,22 @@ class Resource {
         var model = new this.model();
 
         return await model.$db.transaction.start();
+    }
+
+    /**
+     * Aplicar where da rota no where da busca.
+     * 
+     * @param {Object} where 
+     */
+    __applyWhereRoute(where) {
+        if (!this.modelWhere) {
+            return;
+        }
+
+        var keys = Object.keys(resource.modelWhere);
+        for (var id of keys) {
+            where[id] = resource.modelWhere[id];
+        }        
     }
 
     /**

@@ -8,7 +8,7 @@ function listApply_filter(query, req, resource) {
     query.where = {};
 
     // Route
-    listApply_filter_route(query, req, resource);
+    resource.__applyWhereRoute(query.where);
 
     // Search
     listApply_filter_search(query, req, resource);
@@ -66,20 +66,6 @@ function listApply_filter_attributes(query, req, resource) {
 
     // Aplicar os outros atributos mas excluir o atributo "parent"
     //...
-}
-
-/**
- * Aplicar filtros de rota.
- */
-function listApply_filter_route(query, req, resource) {
-    if (!resource.modelWhere) {
-        return;
-    }
-
-    var keys = Object.keys(resource.modelWhere);
-    for (var id of keys) {
-        query.where[id] = resource.modelWhere[id];
-    }
 }
 
 /**
