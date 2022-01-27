@@ -2,6 +2,7 @@ const arr = require("rhinojs/support/arr");
 
 module.exports = (app, resource, middlewares) => {
     app.post(resource.uri, async (req, res) => {
+        console.log('res.store.ini');
         var t = await resource.__transaction();
         try {
             var json = req.body;
@@ -30,11 +31,15 @@ module.exports = (app, resource, middlewares) => {
             // Verificar se foi implementado uma macro de controller (after store)
             await resource.macro('created', [req, res, resource, obj]);
 
+            console.log('res.store.commit.1');
             await t.commit();
+            console.log('res.store.commit.2');
 
             res.json(obj);
         } catch (err) {
+            console.log('res.store.rollback.1');
             await t.rollback();
+            console.log('res.store.rollback.1');
             throw err;
         }
     }, middlewares);
