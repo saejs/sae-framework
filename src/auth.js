@@ -27,7 +27,7 @@ class Auth
         // Verificar se deve disparar o evento de acesso pelo token
         if (user != null) {
             this.$token = token;
-            this.$app.events.emit('event.usuario.acesso', user, token);
+            await this.$app.events.emit('event.usuario.acesso', user, token);
         }
 
         return (user != null);
