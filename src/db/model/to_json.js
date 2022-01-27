@@ -13,14 +13,24 @@ module.exports = (Model) => {
         // Carregar dados originais
         var values = Object.assign({}, this.get());
 
-        if (!this.constructor.hiddens) {
-            return values;
+        // Tratar hiddens do model
+        if (this.constructor.hiddens) {
+            values = arr.except(values, this.constructor.hiddens);
         }
 
-        arr.each(this.constructor.hiddens, (k, v) => {
-            delete values[v];
-        });
+        // Tratar ordem pela definição
+        var ordenados = {};
+        var attrs = Object.keys(this.constructor.rawAttributes);
+        for (var attr of attrs) {
+            if (arr.exists(values, attr)) {
+                ordenados[attr] = values[attr];
+                delete values[attr];
+            }
+        }
 
-        return values;
+        // Verificar se ficou algum nao ordenado
+        ordenados = Object.assign({}, ordenados, values);
+
+        return ordenados;
     }
 }
