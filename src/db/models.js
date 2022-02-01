@@ -60,7 +60,7 @@ module.exports = (app) => {
         Object.keys(models).forEach(modelName => {
             // Prepare
             if (models[modelName].prepare) {
-                models[modelName].prepare(models);
+                models[modelName].prepare(models, db);
             }
 
             // Associate
