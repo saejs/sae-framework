@@ -29,6 +29,17 @@ class ApiError
         this.data = data;
     }
 
+    /**
+     * Gerar uma excessão.
+     * 
+     * @param {string} id ID da mensagem de erro
+     * @param {Object} data Objeto com os parametros da mensagem
+     */
+    static make(id, data = {})
+    {
+        throw new ApiError(id, data);
+    }
+
     __checkErrorMapeados(err, data) {
         if (!(err instanceof Error)) {
             return false;
