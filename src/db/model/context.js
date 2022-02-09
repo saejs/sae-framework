@@ -90,9 +90,24 @@ module.exports = (Model) => {
     }
 
     /**
+     * Assumir attributo empresa do contexto.
+     */
+    Model.prototype.__setAttributesAssumirContextoEmpresa = async (attrName, model) => {
+        // Verificar se atributo já foi informado
+        if (model[attrName]) {
+            return false;
+        }
+
+        // Evento do contexto de empresa
+        await Model.app.events.emit('event.context.company', attrName, model);
+
+        return true;
+    }
+
+    /**
      * Assumir atributos de contexto.
      */
-    Model.prototype.__setAttributesAssumirContexto = (model) => {
+    Model.prototype.__setAttributesAssumirContexto = async (model) => {
         // Carregar atributos
         var attrs = model.constructor.rawAttributes;
         var ids = Object.keys(attrs);
@@ -111,7 +126,7 @@ module.exports = (Model) => {
 
             // Verificar se deve empresa logado
             if (attr.context.company) {
-                //.. assumir empresa...
+                await model.__setAttributesAssumirContextoEmpresa(id, model);
             }
         }
     }
@@ -120,7 +135,7 @@ module.exports = (Model) => {
     /**
      * Atribuir controle de contexto.
      */
-    Model.prototype.setAttributesContext = (model) => {
+    Model.prototype.setAttributesContext = async (model) => {
         // Verificar se é por inquilino
         model.__setAttributesTenant(model);
 
@@ -128,7 +143,7 @@ module.exports = (Model) => {
         model.__setAttributesUser(model);
 
         // Assumir contexto 
-        model.__setAttributesAssumirContexto(model);
+        await model.__setAttributesAssumirContexto(model);
     }
 
     /**

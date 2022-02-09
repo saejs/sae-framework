@@ -6,7 +6,7 @@ module.exports = (Model) => {
         this.$db.transaction.apply(options);
 
         // Aplicar atributos de contexto
-        this.setAttributesContext(this);
+        await this.setAttributesContext(this);
 
         // Executue touches do model
         if (options.noSelfTouches !== false) {
