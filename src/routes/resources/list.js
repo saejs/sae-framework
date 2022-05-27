@@ -1,4 +1,5 @@
 const Arr = require('rhinojs/support/arr');
+const Str = require('rhinojs/support/str');
 const { Op } = require('sequelize');
 
 /**
@@ -67,10 +68,12 @@ function listApply_filter_attributes(query, req, resource) {
     }
 
     // Aplicar os outros atributos mas excluir o atributo "parent"
-    var attrs = Object.keys(req.__query);
-    var attrs = Arr.except(req.__query, ['sort','q','limit','offset', parent_attr]);
-    for (var attr in attrs) {
-        query.where[attr] = attrs[attr];
+    //var attrs = Arr.except(req.__query, ['sort','q','limit','offset', parent_attr]);
+    for (var key in req.__query) {
+        if (Str.is('__*', key)) {
+            var attr = key.substring(2);
+            query.where[attr] = req.__query[key];
+        }
     }
 }
 
