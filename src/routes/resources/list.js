@@ -52,7 +52,9 @@ function listApply_filter_search(query, req, resource) {
 function listApply_filter_attributes(query, req, resource) {
     // Aplicar filtro do parent
     var parent = resource.getParentId(req);
+    var parent_attr = null;
     if (parent) {
+        parent_attr = parent.attr;
         if (!parent.value) {
             if (!parent.showall) {
                 query.where[parent.attr] = { 
@@ -60,12 +62,16 @@ function listApply_filter_attributes(query, req, resource) {
                 };
             }
         } else {
-            query.where[parent.attr] = parent.value;
+            query.where[parent.attr] = parent.value;            
         }
     }
 
     // Aplicar os outros atributos mas excluir o atributo "parent"
-    //...
+    var attrs = Object.keys(req.__query);
+    var attrs = Arr.except(req.__query, ['sort','q','limit','offset', parent_attr]);
+    for (var attr in attrs) {
+        query.where[attr] = attrs[attr];
+    }
 }
 
 /**
