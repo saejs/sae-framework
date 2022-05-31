@@ -26,11 +26,22 @@ validatorRules.obrigatorio_se = (str, opts, attrName, errors, data) => {
     var condAttr = opts.attr;
     var condVal  = opts.val;
 
-    var val = data[condAttr];
-    if (val == condVal) {
-        return (!(validator.isEmpty(str) || (str == 'undefined') || (str == 'null')));
+    // Converter para array se nescessario
+    var condVals = (typeof condVal == 'object') ? condVal : [condVal];
+
+    // Verificar se campo eh vazio
+    if (!(validator.isEmpty(str) || (str == 'undefined') || (str == 'null'))) {
+        return true;
     }
-    
+
+    // Verificar se algum valor do atributo corresponde para ser obrigatório
+    var val = data[condAttr];
+    for (var checkVal of condVals) {
+        if (checkVal == val) {
+            return false;
+        }
+    }
+
     return true;
 };
 
