@@ -28,7 +28,7 @@ validatorRules.obrigatorio_se = (str, opts, attrName, errors, data) => {
 
     var val = data[condAttr];
     if (val == condVal) {
-        return (!(validator.isEmpty(str) || (str == 'undefined')));
+        return (!(validator.isEmpty(str) || (str == 'undefined') || (str == 'null')));
     }
     
     return true;
