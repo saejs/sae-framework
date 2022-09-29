@@ -122,9 +122,9 @@ module.exports = (app) => {
      */
     app.middleware = (id, callback) => {
 
-        const callbakTratado = async (req, res, next) => {
+        const callbakTratado = async (req, res, next, payload = {}) => {
             try {
-                return await callback(req, res, next);
+                return await callback(req, res, next, payload);
             } catch (err) {
                 return res.error(err);
             }
