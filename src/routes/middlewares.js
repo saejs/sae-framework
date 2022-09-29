@@ -43,10 +43,23 @@ class Middlewares
 
         // Verificar se middleware esta registrado e montar lista.
         for (var i = 0; i < ids.length; i++) {
+            // Verificar se id do middleware eh uma funcao
             if (typeof ids[i] == 'function') {
                 rets.push(ids[i]);
             }
 
+            // Verificar se id do middleware eh um objeto
+            if (typeof ids[i] == 'object') {
+                var obj = ids[i];
+                var middleware = this.get(obj.id);
+                if (middleware) {
+                    rets.push(async function (req, res, next) {
+                        await middleware(req, res, next, obj);
+                    });
+                }
+            }
+
+            // Verificar se id do middleware eh uma string
             if (typeof ids[i] == 'string') {
                 var middleware = this.get(ids[i]);
                 if (middleware) {

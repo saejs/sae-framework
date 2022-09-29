@@ -2,6 +2,7 @@ const version = require('./version');
 const Resource = require('./resource');
 const Middlewares = require('./middlewares');
 const Auth = require('../middlewares/auth');
+const Can = require('../middlewares/can');
 
 module.exports = (app) => {
     /**
@@ -137,4 +138,5 @@ module.exports = (app) => {
      */
     app.middleware('auth',  Auth.auth());
     app.middleware('guest', Auth.guest());
+    app.middleware('can',   Can.check());
 }

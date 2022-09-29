@@ -58,7 +58,7 @@ module.exports = {
             }
 
             // Gerar erro
-            res.error('erro.auth.usuario.nao.logado');
+            res.error('erro.auth.msg.usuario_nao_logado');
         }    
     },
 
@@ -70,7 +70,7 @@ module.exports = {
                 return;
             }
 
-            res.error('erro.auth.usuario.logado');
+            res.error('erro.auth.msg.usuario_logado');
         }    
     }
 }
