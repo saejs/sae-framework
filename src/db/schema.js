@@ -27,6 +27,7 @@ module.exports = {
      * @returns {Object}
      */
     association : (table, opts = {}) => {
+
         var ret = {
             type: Sequelize.STRING(36),
             allowNull: true,
@@ -35,6 +36,24 @@ module.exports = {
                 key: 'id',
                 model: table
             }          
+        };
+
+        Object.assign(ret, opts);
+
+        return ret;
+    },
+
+    /**
+     * Add campo Association remota (lookup).
+     * @param {String} table Nome da tabela estrangeira 
+     * @param {*} opts 
+     * @returns {Object}
+     */
+    remoteAssociation : (table, opts = {}) => {
+
+        var ret = {
+            type: Sequelize.STRING(36),
+            allowNull: true,
         };
 
         Object.assign(ret, opts);
