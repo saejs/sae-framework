@@ -3,12 +3,8 @@ const auth = require('./auth');
 
 const app = new App();
 
-// Load database
-//app.db = require('./db')(app);
-app.db = null;
-app.loadDB = function() {
-    app.db = require('./db')(app);
-};
+// Load struct database
+require('./db')(app);
 
 // Criar alias hash no app
 app.hash = require('./hash');

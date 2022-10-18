@@ -1,4 +1,4 @@
-const rules = require('../validates/rules');
+const rules = require('../../validates/rules');
 
 module.exports = (Sequelize) => {
 

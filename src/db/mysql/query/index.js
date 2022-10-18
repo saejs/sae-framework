@@ -1,5 +1,5 @@
 const { Op, Sequelize } = require("sequelize");
-const ApiError = require('../../api_error');
+const ApiError = require('../../../api_error');
 
 class Query
 {

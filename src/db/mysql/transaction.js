@@ -1,4 +1,4 @@
-const ApiError = require("../api_error");
+const ApiError = require("../../api_error");
 
 class Transaction{
     constructor (sequelize)

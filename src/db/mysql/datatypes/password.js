@@ -2,7 +2,7 @@ module.exports = (Sequelize) => {
     const DataTypes = Sequelize.DataTypes;
     const BASE_STRING = DataTypes.STRING.prototype.constructor;
 
-    const hash = require('../../hash');
+    const hash = require('../../../hash');
 
     class PASSWORD extends BASE_STRING
     {
