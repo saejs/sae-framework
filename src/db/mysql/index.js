@@ -1,4 +1,4 @@
-module.exports = (app, opts = {}) => {
+module.exports = async (app, opts = {}) => {
     const db = require('./db');
 
     // Carregar models
