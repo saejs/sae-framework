@@ -5,7 +5,9 @@ const mongoose = require('mongoose');
 module.exports = async (app, opts = {}) => {
 
     // Fazer conexão
-    await mongoose.connect(opts.uri);
+    await mongoose.connect(opts.uri, {
+        serverSelectionTimeoutMS: 5000,
+    });
 
     const db = {
         mongoose,

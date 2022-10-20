@@ -33,17 +33,17 @@ module.exports = (app, db) => {
                 })
     
                 .forEach(file => {
-                    const model = require(path.join(pathModelItem, file))(db);
+                    const model = require(path.join(pathModelItem, file));
     
                     // Atribuir app no objeto model
                     model.prototype.$app = app;
                     model.app = app;
     
                     // Atribuir db no objeto model
-                    model.prototype.$db = db;
-                    model.db = db;
+                    model.prototype.$conn = db;
+                    model.conn = db;
     
-                    models[model.name] = model;
+                    models[model.modelName] = model;
                 });
         }
 
