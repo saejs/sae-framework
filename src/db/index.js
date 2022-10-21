@@ -15,7 +15,7 @@ module.exports = (app) => {
      * Carregar estrutra do DB.
      * @returns {object}
      */
-    app.loadDB = async function(opts = {}) {
+    app.loadDB = function(opts = {}) {
 
         // Atribuir config padrao
         opts = Object.assign({}, { driver: 'mysql' }, opts);
@@ -26,7 +26,7 @@ module.exports = (app) => {
         }
 
         // Carregar estrutura mysql
-        app.db = await require('./' + opts.driver)(app, opts);
+        app.db = require('./' + opts.driver)(app, opts);
 
         return app.db;
     };
