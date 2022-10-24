@@ -33,7 +33,7 @@ module.exports = (Model) => {
         // Verificar se usuário esta logado
         var user = auth.user();
         if (!user) {
-            throw new ApiError('erro.auth.sem.contexto');
+            throw new ApiError('erro.auth.sem.contexto', { attrName: model.constructor.context.tenant_attr });
         }
 
         // Atribuir attributo do model pelo inquilino logado do usuario.
@@ -59,7 +59,7 @@ module.exports = (Model) => {
         // Verificar se usuário esta logado
         var user = auth.user();
         if (!user) {
-            throw new ApiError('erro.auth.sem.contexto');
+            throw new ApiError('erro.auth.sem.contexto', { attrName: model.constructor.context.user_attr });
         }
 
         // Atribuir attributo do model pelo usuario logado do usuario.
@@ -80,7 +80,7 @@ module.exports = (Model) => {
         // Verificar se usuário esta logado
         var user = auth.user();
         if (!user) {
-            throw new ApiError('erro.auth.sem.contexto');
+            throw new ApiError('erro.auth.sem.contexto', { attrName });
         }
 
         // Atribuir attributo do model pelo usuario logado do usuario.
