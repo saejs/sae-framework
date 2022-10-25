@@ -4,7 +4,7 @@ module.exports = (Model) => {
     Model.prototype.__destroy = __destroy;
     Model.prototype.destroy = async function (options = {}) {
         // Aplicar os filtros de contexto
-        this.constructor.setWhereContext(this.constructor, options);
+        await this.constructor.setWhereContext(this.constructor, options);
 
         // Verificar se deve atribuir a transacao atual
         this.$db.transaction.apply(options);
@@ -18,7 +18,7 @@ module.exports = (Model) => {
     Model.__destroy = __destroyStatic;
     Model.destroy = async function (options = {}) {
         // Aplicar os filtros de contexto
-        this.setWhereContext(this, options);
+        await this.setWhereContext(this, options);
 
         // Verificar se deve atribuir a transacao atual
         this.db.transaction.apply(options);
