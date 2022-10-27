@@ -10,7 +10,12 @@ module.exports = (Model) => {
         this.$db.transaction.apply(options);
 
         // Executar o destroy original
-        return await this.__destroy(options);
+        var ret = await this.__destroy(options);
+
+        // Executar os touches
+        await this.touchAttributes(options);
+
+        return ret;
     }
 
     // Static
